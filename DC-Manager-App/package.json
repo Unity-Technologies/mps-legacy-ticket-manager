@@ -1,0 +1,12 @@
+{
+  "name": "my-zendesk-app",
+  "version": "1.0.0",
+  "description": "My Zendesk application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app_remote/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
