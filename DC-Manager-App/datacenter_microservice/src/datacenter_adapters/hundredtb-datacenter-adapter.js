@@ -88,20 +88,28 @@ class _100TBDataCenterAdapter extends DataCenterClient {
       );
 
       // Handle the response based on the 100TB API's specific codes and structure
-      if (response.ok) {
-        console.log(response.data);
-        return response.data;
+      if (response.status === 201 || response.status === 200) {
+        console.log(`100TB ticket created ${response.data.data.id}`);
+        return response.data.data;
       } else {
-        // Handle errors based on the response status code and message
-        console.error(
-          `${response.status} Error creating ticket:`,
-          response.data.message
-        );
-        throw new Error(
-          `${response.status} Failed to create ticket: ${
-            response.data.message || "Unknown error"
-          }`
-        );
+        if (response.data.status === 400 || response.status === 400) {
+          // Handle specific 400 errors based on the message
+          if (response.data.message === "Missing Ticket subject") {
+            throw new Error("Error: Missing Ticket Subject");
+          } else if (response.data.message === "Missing Ticket body") {
+            throw new Error("Error: Missing Ticket Body");
+          } else {
+            // Handle other 400 errors generically
+            console.error(`${response.status} Error Creating ticket:`, response.data.message);
+            throw new Error(`${response.status} Failed to create ticket: ${response.data.message}`);
+          }
+        } else if (response.data.status === 401 || response.status === 401) {
+          console.error("401 Unauthenticated Error, Response Message:", response.data.message);
+          throw new Error(`401 Failed to create ticket: ${response.data.error.description}`);
+        } else {
+          console.error(`${response.status} Error Creating ticket:`, response.data.message);
+          throw new Error(`${response.status} Failed to create ticket: ${response.data.message}`);
+        }
       }
     } catch (error) {
       // Handle errors appropriately (e.g., log the error and re-throw)
@@ -119,21 +127,24 @@ class _100TBDataCenterAdapter extends DataCenterClient {
         },
       });
 
-      if (response.ok) {
+      if (response.status === 201 || response.status === 200) {
         console.log(`Fetched 100TB Ticket #${ticketId}:`, response.data);
         // Ticket Retrieval successful
         return response.data;
       } else {
-        // Handle errors based on the response status code and message
-        console.error(
-          `${response.status} Error retrieving ticket:`,
-          response.data.message
-        );
-        throw new Error(
-          `${response.status} Failed to retrieve ticket: ${
-            response.data.message || "Unknown error"
-          }`
-        );
+        if (response.data.status === 400 || response.status === 400) {
+          console.error("400 Ticket ID Type Invalid:", response.data.message)
+          throw new Error(`400 Ticket ID Type Invalid: ${response.data.message}`);
+        } else if (response.data.status === 401 || response.status === 401) {
+          console.error("401 Unauthenticated Error, Response Message:", response.data.error.description);
+          throw new Error(`401 Failed to retrieve ticket: ${response.data.error.description}`);
+        } else if (response.data.status === 404 || response.status === 404) {
+          console.error(`${response.data.status} Error retrieving ticket:`, response.data.message);
+          throw new Error(`Ticket not found: ${ticketId}`); // Informative message for 404
+        } else {
+          console.error(`${response.data.status || response.status} Error retrieving ticket:`, response.data.message);
+          throw new Error(`${response.data.status || response.status} Failed to retrieve ticket: ${response.data.message}`);
+        }
       }
     } catch (error) {
       // Handle errors appropriately (e.g., log the error and re-throw)
