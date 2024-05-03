@@ -88,21 +88,20 @@ class _100TBDataCenterAdapter extends DataCenterClient {
       );
 
       // Handle the response based on the 100TB API's specific codes and structure
-      if (response.status === 200 || response.status === 201) {
+      if (response.ok) {
         console.log(response.data);
         return response.data;
-      } else if (response.status === 401) {
-        console.error(
-          "401 Unauthenticated Error, Response Message:",
-          response.data.message
-        );
       } else {
         // Handle errors based on the response status code and message
         console.error(
           `${response.status} Error creating ticket:`,
           response.data.message
         );
-        throw new Error(`${response.status} Failed to create ticket: ${response.data.message}`);
+        throw new Error(
+          `${response.status} Failed to create ticket: ${
+            response.data.message || "Unknown error"
+          }`
+        );
       }
     } catch (error) {
       // Handle errors appropriately (e.g., log the error and re-throw)
@@ -120,22 +119,21 @@ class _100TBDataCenterAdapter extends DataCenterClient {
         },
       });
 
-      if (response.status === 200 || response.status === 201) {
+      if (response.ok) {
         console.log(`Fetched 100TB Ticket #${ticketId}:`, response.data);
         // Ticket Retrieval successful
         return response.data;
-      } else if (response.status === 401) {
-        console.error(
-          "401 Unauthenticated Error, Response Message:",
-          response.data.message
-        );
       } else {
         // Handle errors based on the response status code and message
         console.error(
           `${response.status} Error retrieving ticket:`,
           response.data.message
         );
-        throw new Error(`${response.status} Failed to retrieve ticket: ${response.data.message}`);
+        throw new Error(
+          `${response.status} Failed to retrieve ticket: ${
+            response.data.message || "Unknown error"
+          }`
+        );
       }
     } catch (error) {
       // Handle errors appropriately (e.g., log the error and re-throw)
