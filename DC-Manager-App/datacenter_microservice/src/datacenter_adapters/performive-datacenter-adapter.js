@@ -8,11 +8,7 @@ class _PerformiveDataCenterAdapter extends DataCenterClient {
 
   async createTicket(data) {
     // Extract relevant data from the input argument
-    const {
-        group = "Support",
-        subject,
-        body,
-    } = data;
+    const { group = "Support", subject, body } = data;
 
     try {
       const requestBody = {
@@ -28,8 +24,8 @@ class _PerformiveDataCenterAdapter extends DataCenterClient {
         {
           headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            'X-Auth-Token': `${this.apiKey}`,
+            Accept: "application/json",
+            "X-Auth-Token": `${this.apiKey}`,
           },
         }
       );
@@ -38,20 +34,25 @@ class _PerformiveDataCenterAdapter extends DataCenterClient {
       if (response.status === 200 || response.status === 201) {
         console.log(response.data);
         return response.data;
-      } else if (response.status === 401) {
-        console.error(
-          "401 Unauthenticated Error, Response Message:",
-          response.data.message
-        );
       } else {
-        // Handle errors based on the response status code and message
-        console.error(
-          `${response.status} Error creating Performive ticket:`,
-          response.data.message
-        );
-        throw new Error(
-          `${response.status} Failed to create Performive ticket: ${response.data.message}`
-        );
+        if (response.status === 400) {
+          console.error(`400 Error Creating ticket:`, response.data.reason);
+          throw new Error(`Error: ${response.data.reason}`);
+        } else if (response.status === 401) {
+          console.error(
+            "401 Unauthenticated Error, Response Message:",
+            response.data.message
+          );
+        } else {
+          // Handle errors based on the response status code and message
+          console.error(
+            `${response.status} Error creating Performive ticket:`,
+            response.data.message
+          );
+          throw new Error(
+            `${response.status} Failed to create Performive ticket: ${response.data.message}`
+          );
+        }
       }
     } catch (error) {
       // Handle errors appropriately (e.g., log the error and re-throw)
@@ -64,20 +65,26 @@ class _PerformiveDataCenterAdapter extends DataCenterClient {
     try {
       const response = await axios.get(`${this.baseUrl}/tickets/${ticketId}`, {
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "X-Auth-Token": `${this.apiKey}`,
         },
       });
 
       if (response.status === 200 || response.status === 201) {
-        console.log(`Fetched Performive Ticket #${ticketId}:`, response);
-        // Ticket Retrieval successful
-        return response.data;
+        if (response.data.success === true) {
+          console.log(`Fetched Performive Ticket #${ticketId}:`, response.data);
+          console.log(response);
+          return response.data;
+        } else {
+          console.error(`Error: ${response.data.message}`);
+          throw new Error(`Error: ${response.data.message}`);
+        }        
       } else if (response.status === 401) {
         console.error(
           "401 Unauthenticated Error, Response Message:",
-          response.data.message
+          response.data.reason
         );
+        throw new Error(`401 Unauthorized Error: ${response.data.reason}`);
       } else {
         // Handle errors based on the response status code and message
         console.error(

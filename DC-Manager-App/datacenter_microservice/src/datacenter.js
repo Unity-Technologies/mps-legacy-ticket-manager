@@ -163,17 +163,18 @@ const mockAttachment2 = {
 
 // const hundredtbAdapter = new _100TBDataCenterAdapter(hundredtbConfig);
 
+// Test Case 1: Valid Ticket Creation
+
 // const ticketData = {
-//   subject: "Test Ticket with Attachment",
-//   body: "Body with Attachment",
+//   subject: "Test Ticket",
+//   body: "Test Body without Attachment",
 //   department: undefined,
 //   priority: undefined,
-//   attachments: [mockAttachment1],
+//   attachments: [mockAttachment1, mockAttachment1, mockAttachment1],
 // };
 
 // try {
 //   hundredtbAdapter.createTicket(ticketData);
-// //   console.log("Ticket created successfully:", createdTicket);
 // } catch (error) {
 //   console.error("Error creating ticket:", error.message);
 // }
@@ -258,18 +259,17 @@ const mockAttachment2 = {
 
 // Performive Tesing --------------------
 
-// const performiveConfig = {
-//     baseUrl: "https://api.performive.com/api/v1", // Replace with your actual API endpoint
-//     apiKey: `${process.env.PERFORMIVE_API_KEY}`, // Replace with your actual API key
-//   };
+const performiveConfig = {
+    baseUrl: "https://api.performive.com/api/v1", // Replace with your actual API endpoint
+    apiKey: `${process.env.PERFORMIVE_API_KEY}`, // Replace with your actual API key
+  };
 
-// const performiveAdapter = new _PerformiveDataCenterAdapter(performiveConfig);
+const performiveAdapter = new _PerformiveDataCenterAdapter(performiveConfig);
 
-// const ticketData = {
-//   group: undefined,
-//   subject: "Test ticket subject",
-//   body: "This is an API test. Please close this ticket.",
-// };
+const ticketData = {
+  group: undefined,
+  subject: "Test ticket subject",
+};
 
 // try {
 //     performiveAdapter.createTicket(ticketData);
@@ -278,45 +278,45 @@ const mockAttachment2 = {
 //   console.error("Error creating ticket:", error.message);
 // }
 
-// const ticketId = 618192; // Replace with the actual ticket ID
-
-// try {
-//     performiveAdapter.getTicket(ticketId);
-//   //   console.log("Fetched ticket details:", retrievedTicket);
-// } catch (error) {
-//   console.error("Error retrieving ticket:", error.message);
-// }
-
-// INAP Tesing --------------------
-
-const inapConfig = {
-    baseUrl: "https://api.compass.horizoniq.com/v1", // Replace with your actual API endpoint
-    apiKey: `${process.env.INAP_API_KEY}`, // Replace with your actual API key
-  };
-
-const inapAdapter = new _InapDataCenterAdapter(inapConfig);
-
-const ticketData = {
-  priority: "Low",
-  shortDescription: "Test Ticket with Attachment",
-  description: "Test ticket body",
-};
+const ticketId = null; // Replace with the actual ticket ID
 
 try {
-    inapAdapter.createTicket(ticketData);
-  //   console.log("Ticket created successfully:", createdTicket);
-} catch (error) {
-  console.error("Error creating ticket:", error.message);
-}
-
-const ticketId = "CASE01262228"; // Replace with the actual ticket ID
-
-try {
-    inapAdapter.getTicket(ticketId);
+    performiveAdapter.getTicket(ticketId);
   //   console.log("Fetched ticket details:", retrievedTicket);
 } catch (error) {
   console.error("Error retrieving ticket:", error.message);
 }
+
+// INAP Tesing --------------------
+
+// const inapConfig = {
+//     baseUrl: "https://api.compass.horizoniq.com/v1", // Replace with your actual API endpoint
+//     apiKey: `${process.env.INAP_API_KEY}`, // Replace with your actual API key
+//   };
+
+// const inapAdapter = new _InapDataCenterAdapter(inapConfig);
+
+// const ticketData = {
+//   priority: "Low",
+//   shortDescription: "Test Ticket with Attachment",
+//   description: "Test ticket body",
+// };
+
+// try {
+//     inapAdapter.createTicket(ticketData);
+//   //   console.log("Ticket created successfully:", createdTicket);
+// } catch (error) {
+//   console.error("Error creating ticket:", error.message);
+// }
+
+// const ticketId = "CASE01262228"; // Replace with the actual ticket ID
+
+// try {
+//     inapAdapter.getTicket(ticketId);
+//   //   console.log("Fetched ticket details:", retrievedTicket);
+// } catch (error) {
+//   console.error("Error retrieving ticket:", error.message);
+// }
 
 // DataPacket Tesing --------------------
 

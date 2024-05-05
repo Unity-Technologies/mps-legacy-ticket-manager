@@ -216,7 +216,7 @@ describe("Get 100TB Ticket", () => {
 
   test('throws error for Invalid Ticket ID type (400)', async () => {
     const adapter = new _100TBDataCenterAdapter(hundredtbConfig);
-    const ticketId = '12345';
+    const ticketId = 'e';
   
     axios.get.mockResolvedValueOnce(getTicketInvalidTicketIdTypeResponse);
   
@@ -235,17 +235,7 @@ describe("Get 100TB Ticket", () => {
     });
     const ticketId = '12345';
   
-    const mockResponse = {
-      status: 401,
-      data: {
-        error: {
-          type: 'UNAUTHENTICATED',
-          description: 'Invalid API Key',
-        },
-      },
-    };
-  
-    axios.get.mockResolvedValueOnce(mockResponse);
+    axios.get.mockResolvedValueOnce(invalidApiKey);
   
     try {
       await hundredtbAdapter.getTicket(ticketId);
