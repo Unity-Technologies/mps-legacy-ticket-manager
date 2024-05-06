@@ -191,20 +191,20 @@ const mockAttachment2 = {
 
 // I3D Testing --------------------
 
-// const i3dConfig = {
-//     baseUrl: "https://api.i3d.net/v3", // Replace with your actual API endpoint
-//     apiKey: `${process.env.I3D_API_KEY}`, // Replace with your actual API key
-//   };
+const i3dConfig = {
+    baseUrl: "https://api.i3d.net/v3", // Replace with your actual API endpoint
+    apiKey: null, // Replace with your actual API key
+  };
 
-// const i3dAdapter = new _i3dDataCenterAdapter(i3dConfig);
+const i3dAdapter = new _i3dDataCenterAdapter(i3dConfig);
 
-// const ticketData = {
-//   title: "Test Ticket",
-//   content: "Test Body",
-//   department: undefined,
-//   category: undefined,
-//   attachmentIds: undefined,
-// };
+const ticketData = {
+  title: "Test Ticket",
+  content: null,
+  department: undefined,
+  category: undefined,
+  attachmentIds: undefined,
+};
 
 // try {
 //   i3dAdapter.createTicket(ticketData);
@@ -213,14 +213,14 @@ const mockAttachment2 = {
 //   console.error("Error creating ticket:", error.message);
 // }
 
-// const ticketId = 1930181; // Replace with the actual ticket ID
+const ticketId = 1935509; // Replace with the actual ticket ID
 
-// try {
-//   i3dAdapter.getTicket(ticketId);
-//   //   console.log("Fetched ticket details:", retrievedTicket);
-// } catch (error) {
-//   console.error("Error retrieving ticket:", error.message);
-// }
+try {
+  i3dAdapter.getTicket(ticketId);
+  //   console.log("Fetched ticket details:", retrievedTicket);
+} catch (error) {
+  console.error("Error retrieving ticket:", error.message);
+}
 
 // Velia Tesing --------------------
 
@@ -259,17 +259,17 @@ const mockAttachment2 = {
 
 // Performive Tesing --------------------
 
-const performiveConfig = {
-    baseUrl: "https://api.performive.com/api/v1", // Replace with your actual API endpoint
-    apiKey: `${process.env.PERFORMIVE_API_KEY}`, // Replace with your actual API key
-  };
+// const performiveConfig = {
+//     baseUrl: "https://api.performive.com/api/v1", // Replace with your actual API endpoint
+//     apiKey: `${process.env.PERFORMIVE_API_KEY}`, // Replace with your actual API key
+//   };
 
-const performiveAdapter = new _PerformiveDataCenterAdapter(performiveConfig);
+// const performiveAdapter = new _PerformiveDataCenterAdapter(performiveConfig);
 
-const ticketData = {
-  group: undefined,
-  subject: "Test ticket subject",
-};
+// const ticketData = {
+//   group: undefined,
+//   subject: "Test ticket subject",
+// };
 
 // try {
 //     performiveAdapter.createTicket(ticketData);
@@ -278,14 +278,14 @@ const ticketData = {
 //   console.error("Error creating ticket:", error.message);
 // }
 
-const ticketId = null; // Replace with the actual ticket ID
+// const ticketId = 618192; // Replace with the actual ticket ID
 
-try {
-    performiveAdapter.getTicket(ticketId);
-  //   console.log("Fetched ticket details:", retrievedTicket);
-} catch (error) {
-  console.error("Error retrieving ticket:", error.message);
-}
+// try {
+//     performiveAdapter.getTicket(ticketId);
+//   //   console.log("Fetched ticket details:", retrievedTicket);
+// } catch (error) {
+//   console.error("Error retrieving ticket:", error.message);
+// }
 
 // INAP Tesing --------------------
 

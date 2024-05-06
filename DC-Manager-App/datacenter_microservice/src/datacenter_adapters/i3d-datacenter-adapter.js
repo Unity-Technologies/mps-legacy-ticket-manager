@@ -33,7 +33,7 @@ class _I3dDataCenterAdapter extends DataCenterClient {
         {
           headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
+            Accept: "application/json",
             "PRIVATE-TOKEN": `${this.apiKey}`,
           },
         }
@@ -41,22 +41,40 @@ class _I3dDataCenterAdapter extends DataCenterClient {
 
       // Handle the response based on the 100TB API's specific codes and structure
       if (response.status === 200 || response.status === 201) {
-        console.log(response.data);
+        console.log(response);
         return response.data;
-      } else if (response.status === 401) {
-        console.error(
-          "401 Unauthenticated Error, Response Message:",
-          response.data.message
-        );
       } else {
-        // Handle errors based on the response status code and message
-        console.error(
-          `${response.status} Error creating i3D ticket:`,
-          response.data.message
-        );
-        throw new Error(
-          `${response.status} Failed to i3D create ticket: ${response.data.message}`
-        );
+        if (response.status === 401) {
+          console.error(
+            "401 Unauthenticated Error, Response Message:",
+            response.data.message
+          );
+        } else if (response.status === 422) {
+          if (response.data.errors[0].property === "title") {
+            console.error("422 Unprocessable Entity: Subject is required");
+            throw new Error(
+              `Error: ${response.data.errors[0].property} ${response.data.errors[0].message}`
+            );
+          } else if (response.data.errors[0].property === "content") {
+            console.error("422 Unprocessable Entity: Body is required");
+            throw new Error(
+              `Error: ${response.data.errors[0].property} ${response.data.errors[0].message}`
+            );
+          }
+          console.error(
+            "422 Unprocessable Entity, Response Message:",
+            `${response.data.errors[0].property} ${response.data.errors[0].message}`
+          );
+        } else {
+          // Handle errors based on the response status code and message
+          console.error(
+            `${response.status} Error creating i3D ticket:`,
+            response.data
+          );
+          throw new Error(
+            `${response.status} Failed to i3D create ticket: ${response.data.message}`
+          );
+        }
       }
     } catch (error) {
       // Handle errors appropriately (e.g., log the error and re-throw)
@@ -69,7 +87,7 @@ class _I3dDataCenterAdapter extends DataCenterClient {
     try {
       const response = await axios.get(`${this.baseUrl}/tickets/${ticketId}`, {
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "PRIVATE-TOKEN": `${this.apiKey}`,
         },
       });
@@ -78,20 +96,41 @@ class _I3dDataCenterAdapter extends DataCenterClient {
         console.log(`Fetched i3D Ticket #${ticketId}:`, response.data);
         // Ticket Retrieval successful
         return response.data;
-      } else if (response.status === 401) {
-        console.error(
-          "401 Unauthenticated Error, Response Message:",
-          response.data.message
-        );
       } else {
-        // Handle errors based on the response status code and message
-        console.error(
-          `${response.status} Error retrieving i3D ticket:`,
-          response.data.message
-        );
-        throw new Error(
-          `${response.status} Failed to retrieve i3D ticket: ${response.data.message}`
-        );
+        if (response.status === 401) {
+          console.error(
+            "401 Unauthenticated Error, Response Message:",
+            response.data.errorMessage
+          );
+          throw new Error(
+            `${response.status} Failed to retrieve i3D ticket: ${response.data.errorMessage}`
+          );
+        } else if (response.status === 404) {
+          if (response.data.errorCode === 10012) {
+            console.error(
+              "404 Not Found Error, Response Message:",
+              response.data.errorMessage
+            );
+            throw new Error(
+              `Error: Ticket ID type most likely invalid, ${response.data.errorMessage}`
+            );
+          } else if (response.data.errorCode === 10001) {
+            console.error(
+              `${response.status} Error retrieving ticket:`,
+              response.data.errorMessage
+            );
+            throw new Error(`Ticket not found: ${ticketId}`);
+          }
+        } else {
+          // Handle errors based on the response status code and message
+          console.error(
+            `${response.status} Error retrieving i3D ticket:`,
+            response.data
+          );
+          throw new Error(
+            `${response.status} Failed to retrieve i3D ticket: ${response.data}`
+          );
+        }
       }
     } catch (error) {
       // Handle errors appropriately (e.g., log the error and re-throw)
