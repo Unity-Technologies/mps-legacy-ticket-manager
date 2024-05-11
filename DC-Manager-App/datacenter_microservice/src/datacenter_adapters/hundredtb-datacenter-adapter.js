@@ -51,30 +51,30 @@ class _100TBDataCenterAdapter extends DataCenterClient {
       throw new Error("Maximum 2 attachments allowed per ticket.");
     }
 
-    try {
-      const requestBody = {
-        // Map data to the format required by the 100TB API
-        subject,
-        body,
-        department,
-        priority,
-        attachments: attachments.map((attachment) => {
-          if (!isValidFileType(attachment)) {
-            throw new Error(
-              `Invalid attachment file type: ${
-                attachment.mime
-              }. Allowed types are: ${allowedFileTypes.join(", ")}`
-            );
-          }
-          return {
-            // Adapt attachment data to the format expected by the 100TB API
-            mime: attachment.mime,
-            name: attachment.name,
-            file: fs.readFileSync(attachment.path, "base64"),
-          };
-        }),
-      };
+    const requestBody = {
+      // Map data to the format required by the 100TB API
+      subject,
+      body,
+      department,
+      priority,
+      attachments: attachments.map((attachment) => {
+        if (!isValidFileType(attachment)) {
+          throw new Error(
+            `Invalid attachment file type: ${
+              attachment.mime
+            }. Allowed types are: ${allowedFileTypes.join(", ")}`
+          );
+        }
+        return {
+          // Adapt attachment data to the format expected by the 100TB API
+          mime: attachment.mime,
+          name: attachment.name,
+          file: fs.readFileSync(attachment.path, "base64"),
+        };
+      }),
+    };
 
+    try {
       const response = await axios.post(
         `${this.baseUrl}/tickets`,
         requestBody,
@@ -86,35 +86,52 @@ class _100TBDataCenterAdapter extends DataCenterClient {
           },
         }
       );
-
-      // Handle the response based on the 100TB API's specific codes and structure
-      if (response.status === 201 || response.status === 200) {
+      if (response.status === 200 || response.status === 201) {
         console.log(`100TB ticket created ${response.data.data.id}`);
         return response.data.data;
-      } else {
-        if (response.data.status === 400 || response.status === 400) {
-          // Handle specific 400 errors based on the message
-          if (response.data.message === "Missing Ticket subject") {
-            throw new Error("Error: Missing Ticket Subject");
-          } else if (response.data.message === "Missing Ticket body") {
-            throw new Error("Error: Missing Ticket Body");
-          } else {
-            // Handle other 400 errors generically
-            console.error(`${response.status} Error Creating ticket:`, response.data.message);
-            throw new Error(`${response.status} Failed to create ticket: ${response.data.message}`);
-          }
-        } else if (response.data.status === 401 || response.status === 401) {
-          console.error("401 Unauthenticated Error, Response Message:", response.data.message);
-          throw new Error(`401 Failed to create ticket: ${response.data.error.description}`);
-        } else {
-          console.error(`${response.status} Error Creating ticket:`, response.data.message);
-          throw new Error(`${response.status} Failed to create ticket: ${response.data.message}`);
-        }
       }
     } catch (error) {
-      // Handle errors appropriately (e.g., log the error and re-throw)
-      console.error("Error creating ticket:", error.message);
-      throw error;
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls outside the validated range
+        console.error(
+          `${error.response.status} Error Creating ticket:`,
+          error.response.data.message
+        );
+
+        if (error.response.status === 400) {
+          // Handle specific 400 errors based on the message
+          if (error.response.data.message === "Missing Ticket subject") {
+            throw new Error("Error: Missing Ticket Subject");
+          } else if (error.response.data.message === "Missing Ticket body") {
+            throw new Error("Error: Missing Ticket Body");
+          } else {
+            // Handle other 400 errors with a generic message
+            throw new Error(
+              `Failed to create ticket: ${error.response.data.message}`
+            );
+          }
+        } else if (error.response.status === 401) {
+          console.error(
+            "401 Unauthenticated Error, Response Message:",
+            error.response.data.message
+          );
+          throw new Error(
+            `Failed to create ticket: ${error.response.data.error.description}`
+          );
+        } else {
+          // Handle other unexpected errors
+          throw new Error(`Failed to create ticket: ${error.message}`);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Error creating ticket: No response received");
+        throw new Error("Network Error: Could not create ticket");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error creating ticket:", error);
+        throw error;
+      }
     }
   }
 
@@ -131,25 +148,55 @@ class _100TBDataCenterAdapter extends DataCenterClient {
         console.log(`Fetched 100TB Ticket #${ticketId}:`, response.data);
         // Ticket Retrieval successful
         return response.data;
-      } else {
-        if (response.data.status === 400 || response.status === 400) {
-          console.error("400 Ticket ID Type Invalid:", response.data.message)
-          throw new Error(`400 Ticket ID Type Invalid: ${response.data.message}`);
-        } else if (response.data.status === 401 || response.status === 401) {
-          console.error("401 Unauthenticated Error, Response Message:", response.data.error.description);
-          throw new Error(`401 Failed to retrieve ticket: ${response.data.error.description}`);
-        } else if (response.data.status === 404 || response.status === 404) {
-          console.error(`${response.data.status} Error retrieving ticket:`, response.data.message);
-          throw new Error(`Ticket not found: ${ticketId}`); // Informative message for 404
-        } else {
-          console.error(`${response.data.status || response.status} Error retrieving ticket:`, response.data.message);
-          throw new Error(`${response.data.status || response.status} Failed to retrieve ticket: ${response.data.message}`);
-        }
       }
     } catch (error) {
-      // Handle errors appropriately (e.g., log the error and re-throw)
-      console.error("Error retrieving ticket:", error.message);
-      throw error;
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls outside the validated range
+        console.error(
+          `${error.response.status} Error Creating ticket:`,
+          error.response.data.message
+        );
+
+        if (error.response.status === 400) {
+          // Handle specific 400 errors based on the message
+          console.error(
+            "400 Ticket ID Type Invalid:",
+            error.response.data.message
+          );
+          throw new Error(
+            `400 Ticket ID Type Invalid: ${error.response.data.message}`
+          );
+        } else if (error.response.status === 401) {
+          console.error(
+            "401 Unauthenticated Error, Response Message:",
+            error.response.data.message
+          );
+          throw new Error(
+            `401 Failed to retrieve ticket: ${error.response.data.error.description}`
+          );
+        } else if (
+          error.response.data.status === 404 ||
+          error.response.status === 404
+        ) {
+          console.error(
+            `${error.response.data.status} Error retrieving ticket:`,
+            error.response.data.message
+          );
+          throw new Error(`Ticket not found: ${ticketId}`); // Informative message for 404
+        } else {
+          // Handle other unexpected errors
+          throw new Error(`Failed to create ticket: ${error.message}`);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Error retrieving ticket: No response received");
+        throw new Error("Network Error: Could not retrieve ticket");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error retrieving ticket:", error);
+        throw error;
+      }
     }
   }
 }

@@ -34,30 +34,41 @@ class _PerformiveDataCenterAdapter extends DataCenterClient {
       if (response.status === 200 || response.status === 201) {
         console.log(response.data);
         return response.data;
-      } else {
-        if (response.status === 400) {
-          console.error(`400 Error Creating ticket:`, response.data.reason);
-          throw new Error(`Error: ${response.data.reason}`);
-        } else if (response.status === 401) {
-          console.error(
-            "401 Unauthenticated Error, Response Message:",
-            response.data.message
-          );
-        } else {
-          // Handle errors based on the response status code and message
-          console.error(
-            `${response.status} Error creating Performive ticket:`,
-            response.data.message
-          );
-          throw new Error(
-            `${response.status} Failed to create Performive ticket: ${response.data.message}`
-          );
-        }
       }
     } catch (error) {
-      // Handle errors appropriately (e.g., log the error and re-throw)
-      console.error("Error creating Performive ticket:", error.message);
-      throw error;
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls outside the validated range
+        console.error(
+          `${error.response.status} Error Creating ticket:`,
+          error.response.data.message
+        );
+
+        if (error.response.status === 400) {
+          console.error(
+            `400 Error Creating ticket:`,
+            error.response.data.reason
+          );
+          throw new Error(`Error: ${error.response.data.reason}`);
+        } else if (error.response.status === 401) {
+          console.error(
+            "401 Unauthenticated Error, Response Message:",
+            error.response.data.message
+          );
+          throw new Error(`401 Unauthorized Error: ${response.data.reason}`);
+        } else {
+          // Handle other unexpected errors
+          throw new Error(`Failed to create ticket: ${error.message}`);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Error creating ticket: No response received");
+        throw new Error("Network Error: Could not create ticket");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error creating ticket:", error);
+        throw error;
+      }
     }
   }
 
@@ -78,27 +89,38 @@ class _PerformiveDataCenterAdapter extends DataCenterClient {
         } else {
           console.error(`Error: ${response.data.message}`);
           throw new Error(`Error: ${response.data.message}`);
-        }        
-      } else if (response.status === 401) {
-        console.error(
-          "401 Unauthenticated Error, Response Message:",
-          response.data.reason
-        );
-        throw new Error(`401 Unauthorized Error: ${response.data.reason}`);
-      } else {
-        // Handle errors based on the response status code and message
-        console.error(
-          `${response.status} Error retrieving Performive ticket:`,
-          response.data.message
-        );
-        throw new Error(
-          `${response.status} Failed to retrieve Performive ticket: ${response.data.message}`
-        );
+        }
       }
     } catch (error) {
-      // Handle errors appropriately (e.g., log the error and re-throw)
-      console.error("Error retrieving Performive ticket:", error.message);
-      throw error;
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls outside the validated range
+        console.error(
+          `${error.response.status} Error Creating ticket:`,
+          error.response.data.message
+        );
+
+        if (error.response.status === 401) {
+          console.error(
+            "401 Unauthenticated Error, Response Message:",
+            error.response.data.reason
+          );
+          throw new Error(
+            `401 Unauthorized Error: ${error.response.data.reason}`
+          );
+        } else {
+          // Handle other unexpected errors
+          throw new Error(`Failed to retrieve ticket: ${error.message}`);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Error retrieving ticket: No response received");
+        throw new Error("Network Error: Could not retrieve ticket");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error retrieving ticket:", error);
+        throw error;
+      }
     }
   }
 }

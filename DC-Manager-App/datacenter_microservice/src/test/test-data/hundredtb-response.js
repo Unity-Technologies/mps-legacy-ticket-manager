@@ -15,18 +15,26 @@ const createTicketInvalid500Response = {
 };
 
 const createTicketInvalidSubjectResponse = {
-  data: {
+  response: {
     status: 400,
-    message: "Missing Ticket subject",
-    data: [],
+    statusText: "Bad Request",
+    data: {
+      status_code: 400,
+      message: "Missing Ticket subject",
+      data: [],
+    },
   },
 };
 
 const createTicketInvalidBodyResponse = {
-  data: {
+  response: {
     status: 400,
-    message: "Missing Ticket body",
-    data: [],
+    statusText: "Bad Request",
+    data: {
+      status_code: 400,
+      message: "Missing Ticket body",
+      data: [],
+    },
   },
 };
 
@@ -57,29 +65,38 @@ const getTicketValidResponse = {
 };
 
 const getTicketInvalidTicketIdTypeResponse = {
-  data: {
+  response: {
     status: 400,
-    message: "Path parameter ticket_id needs to be numeric",
-    data: [],
+    data: {
+      status: 400,
+      message: "Path parameter ticket_id needs to be numeric",
+      data: [],
+    },
   },
 };
 
 const getTicketInvalidTicketNotFoundResponse = {
-  data: {
+  response: {
     status: 404,
-    message: "ticket not found",
-    data: [],
+    data: {
+      status: 404,
+      message: "ticket not found",
+      data: [],
+    },
   },
 };
 
 // 100TB Config Error Responses -----------------------------
 
 const invalidApiKey = {
-  data: {
+  response: {
     status: 401,
-    error: {
-      type: "UNAUTHENTICATED",
-      description: "Invalid API Key",
+    data: {
+      status: 401,
+      error: {
+        type: "UNAUTHENTICATED",
+        description: "Invalid API Key",
+      },
     },
   },
 };

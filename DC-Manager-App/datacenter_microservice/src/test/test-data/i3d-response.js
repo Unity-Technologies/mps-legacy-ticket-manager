@@ -36,20 +36,24 @@ const createTicketInvalid500Response = {
 };
 
 const createTicketInvalidSubjectResponse = {
-  status: 422,
-  data: {
-    errorCode: 11001,
-    errorMessage: "Errors in form",
-    errors: [{ property: "title", message: "is required" }],
+  response: {
+    status: 422,
+    data: {
+      errorCode: 11001,
+      errorMessage: "Errors in form",
+      errors: [{ property: "title", message: "is required" }],
+    },
   },
 };
 
 const createTicketInvalidBodyResponse = {
-  status: 422,
-  data: {
-    errorCode: 11001,
-    errorMessage: "Errors in form",
-    errors: [{ property: "content", message: "is required" }],
+  response: {
+    status: 422,
+    data: {
+      errorCode: 11001,
+      errorMessage: "Errors in form",
+      errors: [{ property: "content", message: "is required" }],
+    },
   },
 };
 
@@ -85,26 +89,32 @@ const getTicketValidResponse = {
 };
 
 const getTicketInvalidTicketIdTypeResponse = {
-  status: 404,
-  data: {
-    errorCode: 10012,
-    errorMessage: "API route not found",
-    errors: [],
+  response: {
+    status: 404,
+    data: {
+      errorCode: 10012,
+      errorMessage: "API route not found",
+      errors: [],
+    },
   },
 };
 
 const getTicketInvalidTicketNotFoundResponse = {
-  status: 404,
-  data: { errorCode: 10001, errorMessage: "Entity not found" },
+  response: {
+    status: 404,
+    data: { errorCode: 10001, errorMessage: "Entity not found" },
+  },
 };
 
 // 100TB Config Error Responses -----------------------------
 
 const invalidApiKey = {
-  status: 401,
-  data: {
-    errorCode: 10004,
-    errorMessage: "Unauthenticated / invalid credentials for API request",
+  response: {
+    status: 401,
+    data: {
+      errorCode: 10004,
+      errorMessage: "Unauthenticated / invalid credentials for API request",
+    },
   },
 };
 

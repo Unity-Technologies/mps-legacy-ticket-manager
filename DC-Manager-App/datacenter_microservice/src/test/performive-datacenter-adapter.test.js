@@ -15,12 +15,14 @@ const performiveConfig = {
   apiKey: "mock-api-key", // Replace with a mock API key for testing
 };
 
+const adapter = new _PerformiveDataCenterAdapter(performiveConfig);
+
 jest.mock("axios");
 
 describe("Create Performive Ticket", () => {
   // Test Successful Ticket Creation
   test("creates a ticket with valid data (mocked success)", async () => {
-    const adapter = new _PerformiveDataCenterAdapter(performiveConfig);
+    
     const ticketData = {
       group: "Support",
       subject: "Test Ticket",
@@ -56,13 +58,12 @@ describe("Create Performive Ticket", () => {
   });
 
   test("throws error for missing subject in ticket data", async () => {
-    const adapter = new _PerformiveDataCenterAdapter(performiveConfig);
     const ticketData = {
       group: "Support",
       body: "Test Body",
     };
 
-    axios.post.mockResolvedValueOnce(createTicketInvalidSubjectOrBodyResponse);
+    axios.post.mockRejectedValue(createTicketInvalidSubjectOrBodyResponse);
 
     try {
       await adapter.createTicket(ticketData);
@@ -75,13 +76,12 @@ describe("Create Performive Ticket", () => {
   });
 
   test("throws error for missing body in ticket data", async () => {
-    const adapter = new _PerformiveDataCenterAdapter(performiveConfig);
     const ticketData = {
       group: "Support",
       subject: "Test Ticket",
     };
 
-    axios.post.mockResolvedValueOnce(createTicketInvalidSubjectOrBodyResponse);
+    axios.post.mockRejectedValue(createTicketInvalidSubjectOrBodyResponse);
 
     try {
       await adapter.createTicket(ticketData);
@@ -94,9 +94,8 @@ describe("Create Performive Ticket", () => {
   });
 });
 
-describe("Get 100TB Ticket", () => {
+describe("Get Performive Ticket", () => {
   test("retrieves a ticket by ID", async () => {
-    const adapter = new _PerformiveDataCenterAdapter(performiveConfig);
 
     axios.get.mockResolvedValueOnce(getTicketValidResponse); // Mock axios.get behavior
 
@@ -151,7 +150,6 @@ describe("Get 100TB Ticket", () => {
   });
 
   test("throws error for Invalid Ticket ID", async () => {
-    const adapter = new _PerformiveDataCenterAdapter(performiveConfig);
     const ticketId = "e";
 
     axios.get.mockResolvedValueOnce(getTicketInvalidTicketIdResponse);
@@ -173,7 +171,7 @@ describe("Get 100TB Ticket", () => {
     });
     const ticketId = "12345";
 
-    axios.get.mockResolvedValueOnce(invalidApiKey);
+    axios.get.mockRejectedValue(invalidApiKey);
 
     try {
       await adapter.getTicket(ticketId);

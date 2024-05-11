@@ -166,11 +166,11 @@ const mockAttachment2 = {
 // Test Case 1: Valid Ticket Creation
 
 // const ticketData = {
-//   subject: "Test Ticket",
+//   subject: "Test Subject",
 //   body: "Test Body without Attachment",
 //   department: undefined,
 //   priority: undefined,
-//   attachments: [mockAttachment1, mockAttachment1, mockAttachment1],
+//   attachments: [],
 // };
 
 // try {
@@ -179,7 +179,7 @@ const mockAttachment2 = {
 //   console.error("Error creating ticket:", error.message);
 // }
 
-// const ticketId = 36663365; // Replace with the actual ticket ID
+// const ticketId = null; // Replace with the actual ticket ID
 
 // try {
 //   hundredtbAdapter.getTicket(ticketId);
@@ -191,20 +191,20 @@ const mockAttachment2 = {
 
 // I3D Testing --------------------
 
-const i3dConfig = {
-    baseUrl: "https://api.i3d.net/v3", // Replace with your actual API endpoint
-    apiKey: null, // Replace with your actual API key
-  };
+// const i3dConfig = {
+//     baseUrl: "https://api.i3d.net/v3", // Replace with your actual API endpoint
+//     apiKey: null, // Replace with your actual API key
+//   };
 
-const i3dAdapter = new _i3dDataCenterAdapter(i3dConfig);
+// const i3dAdapter = new _i3dDataCenterAdapter(i3dConfig);
 
-const ticketData = {
-  title: "Test Ticket",
-  content: null,
-  department: undefined,
-  category: undefined,
-  attachmentIds: undefined,
-};
+// const ticketData = {
+//   title: "Test Ticket",
+//   content: null,
+//   department: undefined,
+//   category: undefined,
+//   attachmentIds: undefined,
+// };
 
 // try {
 //   i3dAdapter.createTicket(ticketData);
@@ -213,23 +213,23 @@ const ticketData = {
 //   console.error("Error creating ticket:", error.message);
 // }
 
-const ticketId = 1935509; // Replace with the actual ticket ID
+// const ticketId = 1935509; // Replace with the actual ticket ID
 
-try {
-  i3dAdapter.getTicket(ticketId);
-  //   console.log("Fetched ticket details:", retrievedTicket);
-} catch (error) {
-  console.error("Error retrieving ticket:", error.message);
-}
+// try {
+//   i3dAdapter.getTicket(ticketId);
+//   //   console.log("Fetched ticket details:", retrievedTicket);
+// } catch (error) {
+//   console.error("Error retrieving ticket:", error.message);
+// }
 
 // Velia Tesing --------------------
 
-// const veliaConfig = {
-//     baseUrl: "https://www.velia.net/api/v1", // Replace with your actual API endpoint
-//     apiKey: `${process.env.VELIA_API_KEY}`, // Replace with your actual API key
-//   };
+const veliaConfig = {
+    baseUrl: "https://www.velia.net/api/v1", // Replace with your actual API endpoint
+    apiKey: null, // Replace with your actual API key
+  };
 
-// const veliaAdapter = new _VeliaDataCenterAdapter(veliaConfig);
+const veliaAdapter = new _VeliaDataCenterAdapter(veliaConfig);
 
 // const ticketData = {
 //   subject: "Test Ticket with Attachment",
@@ -238,8 +238,15 @@ try {
 //   message: "Test ticket body",
 //   files: [`data:image/png;base64,${fs.readFileSync(mockAttachment1.path, "base64")}`],
 // };
+const veliaMockAttachment = `data:image/png;base64,${fs.readFileSync(mockAttachment1.path, "base64")}`
 
-// console.log(ticketData.files);
+const ticketData = {
+  subject: "Test Ticket",
+  topic: "velianet-support",
+  message: "Test ticket body, please close this ticket",
+  files: [],
+};
+
 
 // try {
 //     veliaAdapter.createTicket(ticketData);
@@ -248,14 +255,14 @@ try {
 //   console.error("Error creating ticket:", error.message);
 // }
 
-// const ticketId = 471075; // Replace with the actual ticket ID
+const ticketId = 471075; // Replace with the actual ticket ID
 
-// try {
-//     veliaAdapter.getTicket(ticketId);
-//   //   console.log("Fetched ticket details:", retrievedTicket);
-// } catch (error) {
-//   console.error("Error retrieving ticket:", error.message);
-// }
+try {
+    veliaAdapter.getTicket(ticketId);
+  //   console.log("Fetched ticket details:", retrievedTicket);
+} catch (error) {
+  console.error("Error retrieving ticket:", error.message);
+}
 
 // Performive Tesing --------------------
 
@@ -337,7 +344,7 @@ try {
 //     datapacketAdapter.createTicket(ticketData);
 //   //   console.log("Ticket created successfully:", createdTicket);
 // } catch (error) {
-//   console.error("Error creating ticket:", error.message);
+//   console.error("Error creating ticket:", error);
 // }
 
 // const ticketId = 5055867; // Replace with the actual ticket ID

@@ -17,6 +17,10 @@ class _VeliaDataCenterAdapter extends DataCenterClient {
       files = [],
     } = data;
 
+    if (files.length > 5) {
+      throw new Error("Maximum limit of 5 files reached.");
+    }
+
     try {
       const requestBody = {
         // Map data to the format required by the 100TB API

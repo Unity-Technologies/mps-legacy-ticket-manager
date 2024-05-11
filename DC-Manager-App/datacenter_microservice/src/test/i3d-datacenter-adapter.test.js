@@ -16,12 +16,13 @@ const i3dConfig = {
   apiKey: "mock-api-key", // Replace with a mock API key for testing
 };
 
+const adapter = new _I3dDataCenterAdapter(i3dConfig);
+
 jest.mock("axios");
 
-describe("Create Performive Ticket", () => {
+describe("Create I3D Ticket", () => {
   // Test Successful Ticket Creation
   test("creates a ticket with valid data (mocked success)", async () => {
-    const adapter = new _I3dDataCenterAdapter(i3dConfig);
     const ticketData = {
       title: "Test Ticket",
       content: "Test Body, please close this ticket",
@@ -81,13 +82,12 @@ describe("Create Performive Ticket", () => {
   });
 
   test("throws error for missing title in ticket data (400)", async () => {
-    const adapter = new _I3dDataCenterAdapter(i3dConfig);
     const ticketData = {
       title: null,
       content: "Test Body, please close this ticket",
     };
 
-    axios.post.mockResolvedValueOnce(createTicketInvalidSubjectResponse);
+    axios.post.mockRejectedValue(createTicketInvalidSubjectResponse);
 
     try {
       await adapter.createTicket(ticketData);
@@ -98,13 +98,12 @@ describe("Create Performive Ticket", () => {
   });
 
   test("throws error for missing content in ticket data (400)", async () => {
-    const adapter = new _I3dDataCenterAdapter(i3dConfig);
     const ticketData = {
       title: "Test Ticket",
       content: null,
     };
 
-    axios.post.mockResolvedValueOnce(createTicketInvalidBodyResponse);
+    axios.post.mockRejectedValue(createTicketInvalidBodyResponse);
 
     try {
       await adapter.createTicket(ticketData);
@@ -115,9 +114,8 @@ describe("Create Performive Ticket", () => {
   });
 });
 
-describe("Get 100TB Ticket", () => {
+describe("Get I3D Ticket", () => {
   test("retrieves a ticket by ID", async () => {
-    const adapter = new _I3dDataCenterAdapter(i3dConfig);
 
     axios.get.mockResolvedValueOnce(getTicketValidResponse); // Mock axios.get behavior
 
@@ -164,10 +162,9 @@ describe("Get 100TB Ticket", () => {
   });
 
   test("throws error for Invalid Ticket ID type", async () => {
-    const adapter = new _I3dDataCenterAdapter(i3dConfig);
     const ticketId = "e";
 
-    axios.get.mockResolvedValueOnce(getTicketInvalidTicketIdTypeResponse);
+    axios.get.mockRejectedValue(getTicketInvalidTicketIdTypeResponse);
 
     try {
       await adapter.getTicket(ticketId);
@@ -186,7 +183,7 @@ describe("Get 100TB Ticket", () => {
     });
     const ticketId = "12345";
 
-    axios.get.mockResolvedValueOnce(invalidApiKey);
+    axios.get.mockRejectedValue(invalidApiKey);
 
     try {
       await adapter.getTicket(ticketId);
@@ -199,10 +196,9 @@ describe("Get 100TB Ticket", () => {
   });
 
   test('throws error for non-existent ticket (404)', async () => {
-    const adapter = new _I3dDataCenterAdapter(i3dConfig);
     const ticketId = '12345';
   
-    axios.get.mockResolvedValueOnce(getTicketInvalidTicketNotFoundResponse);
+    axios.get.mockRejectedValue(getTicketInvalidTicketNotFoundResponse);
   
     try {
       await adapter.getTicket(ticketId);

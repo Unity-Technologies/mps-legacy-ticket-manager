@@ -17,10 +17,12 @@ const createTicketInvalid500Response = {
 };
 
 const createTicketInvalidSubjectOrBodyResponse = {
-  status: 400,
-  data: {
-    success: false,
-    reason: "You must include a [subject] and [body] when creating a ticket",
+  response: {
+    status: 400,
+    data: {
+      success: false,
+      reason: "You must include a [subject] and [body] when creating a ticket",
+    },
   },
 };
 
@@ -73,21 +75,26 @@ const getTicketInvalidTicketIdResponse = {
 };
 
 const getTicketInvalidTicketNotFoundResponse = {
-  data: {
+  response: {
     status: 404,
-    message: "ticket not found",
-    data: [],
+    data: {
+      status: 404,
+      message: "ticket not found",
+      data: [],
+    },
   },
 };
 
 // 100TB Config Error Responses -----------------------------
 
 const invalidApiKey = {
-  status: 401,
-  data: {
-    success: false,
-    reason:
-      "We are unable to authenticate your token. Please contact support for more information",
+  response: {
+    status: 401,
+    data: {
+      success: false,
+      reason:
+        "We are unable to authenticate your token. Please contact support for more information",
+    },
   },
 };
 

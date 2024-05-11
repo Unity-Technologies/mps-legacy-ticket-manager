@@ -52,10 +52,9 @@ describe("Create 100TB Ticket", () => {
       }),
       {
         headers: {
-          // Validate headers including X-Api-Token
           "Content-Type": "application/json",
           Accept: "application/json",
-          "X-Api-Token": hundredtbConfig.apiKey, // Replace with mock-api-key if needed for testing
+          "X-Api-Token": hundredtbConfig.apiKey,
         },
       }
     );
@@ -115,41 +114,41 @@ describe("Create 100TB Ticket", () => {
     );
   });
 
-  test('throws error for missing subject in ticket data', async () => {
+  test("throws error for missing subject in ticket data", async () => {
     const adapter = new _100TBDataCenterAdapter(hundredtbConfig);
     const ticketData = {
-      body: 'Test Body without Attachment',
+      body: "Test Body without Attachment",
       department: 10,
       priority: 1,
       attachments: [],
     };
 
-    axios.post.mockResolvedValueOnce(createTicketInvalidSubjectResponse);
+    axios.post.mockRejectedValue(createTicketInvalidSubjectResponse);
 
     try {
       await adapter.createTicket(ticketData);
-      fail('Error: Missing Ticket Subject was not thrown');
+      fail("Error: Missing Ticket Subject was not thrown");
     } catch (error) {
-      expect(error.message).toEqual('Error: Missing Ticket Subject');
+      expect(error.message).toEqual("Error: Missing Ticket Subject");
     }
   });
 
-  test('throws error for missing body in ticket data', async () => {
+  test("throws error for missing body in ticket data", async () => {
     const adapter = new _100TBDataCenterAdapter(hundredtbConfig);
     const ticketData = {
-      subject: 'Test Ticket',
+      subject: "Test Ticket",
       department: 10,
       priority: 1,
       attachments: [],
     };
 
-    axios.post.mockResolvedValueOnce(createTicketInvalidBodyResponse);
+    axios.post.mockRejectedValue(createTicketInvalidBodyResponse);
 
     try {
       await adapter.createTicket(ticketData);
-      fail('Error: Missing Ticket Body was not thrown');
+      fail("Error: Missing Ticket Body was not thrown");
     } catch (error) {
-      expect(error.message).toEqual('Error: Missing Ticket Body');
+      expect(error.message).toEqual("Error: Missing Ticket Body");
     }
   });
 
@@ -214,48 +213,52 @@ describe("Get 100TB Ticket", () => {
     );
   });
 
-  test('throws error for Invalid Ticket ID type (400)', async () => {
+  test("throws error for Invalid Ticket ID type (400)", async () => {
     const adapter = new _100TBDataCenterAdapter(hundredtbConfig);
-    const ticketId = 'e';
-  
-    axios.get.mockResolvedValueOnce(getTicketInvalidTicketIdTypeResponse);
-  
+    const ticketId = "e";
+
+    axios.get.mockRejectedValue(getTicketInvalidTicketIdTypeResponse);
+
     try {
       await adapter.getTicket(ticketId);
-      fail('Error: Ticket not found was not thrown');
+      fail("Error: Ticket not found was not thrown");
     } catch (error) {
-      expect(error.message).toEqual('400 Ticket ID Type Invalid: Path parameter ticket_id needs to be numeric');
+      expect(error.message).toEqual(
+        "400 Ticket ID Type Invalid: Path parameter ticket_id needs to be numeric"
+      );
     }
   });
 
-  test('throws error for Invalid API key (401)', async () => {
+  test("throws error for Invalid API key (401)", async () => {
     const hundredtbAdapter = new _100TBDataCenterAdapter({
-      baseUrl: 'https://api.ingenuitycloudservices.com/rest-api',
+      baseUrl: "https://api.ingenuitycloudservices.com/rest-api",
       apiKey: null,
     });
-    const ticketId = '12345';
-  
-    axios.get.mockResolvedValueOnce(invalidApiKey);
-  
+    const ticketId = "12345";
+
+    axios.get.mockRejectedValue(invalidApiKey);
+
     try {
       await hundredtbAdapter.getTicket(ticketId);
-      fail('Error: 401 Unauthorized was not thrown');
+      fail("Error: 401 Unauthorized was not thrown");
     } catch (error) {
-      expect(error.message).toEqual('401 Failed to retrieve ticket: Invalid API Key');
+      expect(error.message).toEqual(
+        "401 Failed to retrieve ticket: Invalid API Key"
+      );
     }
   });
 
-  test('throws error for non-existent ticket (404)', async () => {
+  test("throws error for non-existent ticket (404)", async () => {
     const adapter = new _100TBDataCenterAdapter(hundredtbConfig);
-    const ticketId = '12345';
-  
-    axios.get.mockResolvedValueOnce(getTicketInvalidTicketNotFoundResponse);
-  
+    const ticketId = "12345";
+
+    axios.get.mockRejectedValue(getTicketInvalidTicketNotFoundResponse);
+
     try {
       await adapter.getTicket(ticketId);
-      fail('Error: Ticket not found was not thrown');
+      fail("Error: Ticket not found was not thrown");
     } catch (error) {
-      expect(error.message).toEqual('Ticket not found: 12345');
+      expect(error.message).toEqual("Ticket not found: 12345");
     }
   });
 });
