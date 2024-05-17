@@ -1,5 +1,7 @@
 // Create Ticket Responses -----------------------------
 
+const { response } = require("express");
+
 const createTicketValidResponse = {
   status: 200,
   data: {
@@ -25,32 +27,42 @@ const createTicketInvalid500Response = {
 };
 
 const createTicketInvalidSubjectResponse = {
-  status: 409,
-  data: {
-    errors: ["Subject can not be blank or longer than 200 characters."],
+  response: {
+    status: 409,
+    data: {
+      errors: ["Subject can not be blank or longer than 200 characters."],
+    },
   },
 };
 
 const createTicketInvalidTopicResponse = {
-  status: 409,
-  data: { errors: ["Topic not found.", "Topic name is invalid."] },
+  response: {
+    status: 409,
+    data: { errors: ["Topic not found.", "Topic name is invalid."] },
+  },
 };
 
 const createTicketInvalidMessageResponse = {
-  status: 409,
-  data: {
-    errors: ["Message cannot be blank or longer than 100000 characters."],
+  response: {
+    status: 409,
+    data: {
+      errors: ["Message cannot be blank or longer than 100000 characters."],
+    },
   },
 };
 
 const createTicketInvalidNumberOfAttachmentsResponse = {
-  status: 409,
-  data: { errors: ["Maximum limit of 5 files reached."] },
+  response: {
+    status: 409,
+    data: { errors: ["Maximum limit of 5 files reached."] },
+  },
 };
 
 const createTicketInvalidAttachmentSizeResponse = {
-  status: 409,
-  data: { errors: ["Maximum Size of 14.3MB reached."] },
+  response: {
+    status: 409,
+    data: { errors: ["Maximum Size of 14.3MB reached."] },
+  },
 };
 
 // Get Ticket Responses -----------------------------
@@ -60,49 +72,53 @@ const getTicketValidResponse = {
   data: {
     ticket: {
       id: 471075,
-      queue: 'velianet-support',
-      status: 'resolved',
-      subject: 'Test ticket',
+      queue: "velianet-support",
+      status: "resolved",
+      subject: "Test ticket",
       priority: 20,
       requestors: [],
       cc: [],
-      created: '2024-04-26T10:24:51+00:00',
+      created: "2024-04-26T10:24:51+00:00",
       due: null,
-      resolved: '2024-04-26T10:28:18+00:00',
-      updated: '2024-04-26T10:28:18+00:00',
-      server: null
+      resolved: "2024-04-26T10:28:18+00:00",
+      updated: "2024-04-26T10:28:18+00:00",
+      server: null,
     },
     history: [
       {
         id: 1,
-        content: 'string',
-        created: '2024-04-26T10:24:52+02:00',
+        content: "string",
+        created: "2024-04-26T10:24:52+02:00",
         staffResponse: true,
-        attachments: null
+        attachments: null,
       },
       {
         id: 2,
-        content: 'Please close this ticket as it is an API test.',
-        created: '2024-04-26T10:26:27+02:00',
+        content: "Please close this ticket as it is an API test.",
+        created: "2024-04-26T10:26:27+02:00",
         staffResponse: true,
-        attachments: null
-      }
-    ]
+        attachments: null,
+      },
+    ],
   },
 };
 
 const getTicketInvalidTicketIdTypeResponse = {
-  data: {
-    type: 'https://tools.ietf.org/html/rfc2616#section-10',
-    title: 'An error occurred',
-    status: 404,
-    detail: 'Not Found'
+  response: {
+    data: {
+      type: "https://tools.ietf.org/html/rfc2616#section-10",
+      title: "An error occurred",
+      status: 404,
+      detail: "Not Found",
+    },
   },
 };
 
 const getTicketInvalidTicketNotFoundResponse = {
-  status: 404,
-  data: { error: 'Ticket is not found.' },
+  response: {
+    status: 404,
+    data: { error: "Ticket is not found." },
+  },
 };
 
 // Velia Config Error Responses -----------------------------
@@ -110,7 +126,7 @@ const getTicketInvalidTicketNotFoundResponse = {
 const invalidApiKey = {
   response: {
     status: 401,
-    data: '',
+    data: "",
   },
 };
 
