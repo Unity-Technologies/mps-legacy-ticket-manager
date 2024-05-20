@@ -125,144 +125,176 @@ describe("Create Velia Ticket", () => {
     );
   });
 
-  // test("throws error for missing subject in ticket data", async () => {
-  //   const ticketData = {
-  //     body: "Test Body without Attachment",
-  //     department: 10,
-  //     priority: 1,
-  //     attachments: [],
-  //   };
+  test("throws error for missing subject in ticket data", async () => {
+    const ticketData = {
+      subject: null,
+      topic: "velianet-support",
+      message: "Test ticket body, please close this ticket",
+      files: [],
+    };
 
-  //   axios.post.mockResolvedValueOnce(createTicketInvalidSubjectResponse);
+    axios.post.mockRejectedValue(createTicketInvalidSubjectResponse);
 
-  //   try {
-  //     await adapter.createTicket(ticketData);
-  //     fail("Error: Missing Ticket Subject was not thrown");
-  //   } catch (error) {
-  //     expect(error.message).toEqual("Error: Missing Ticket Subject");
-  //   }
-  // });
+    try {
+      await adapter.createTicket(ticketData);
+      fail("Error: Missing Ticket Subject was not thrown");
+    } catch (error) {
+      expect(error.message).toEqual("Error: Missing Ticket Subject");
+    }
+  });
 
-  // test("throws error for missing body in ticket data", async () => {
-  //   const ticketData = {
-  //     subject: "Test Ticket",
-  //     department: 10,
-  //     priority: 1,
-  //     attachments: [],
-  //   };
+  test("throws error for missing topic in ticket data", async () => {
+    const ticketData = {
+      subject: "Test Ticket",
+      topic: null,
+      message: "Test ticket body, please close this ticket",
+      files: [],
+    };
 
-  //   axios.post.mockResolvedValueOnce(createTicketInvalidBodyResponse);
+    axios.post.mockRejectedValue(createTicketInvalidTopicResponse);
 
-  //   try {
-  //     await adapter.createTicket(ticketData);
-  //     fail("Error: Missing Ticket Body was not thrown");
-  //   } catch (error) {
-  //     expect(error.message).toEqual("Error: Missing Ticket Body");
-  //   }
-  // });
+    try {
+      await adapter.createTicket(ticketData);
+      fail("Error: Missing Ticket Topic was not thrown");
+    } catch (error) {
+      expect(error.message).toEqual("Error: Missing Ticket Topic");
+    }
+  });
 
-  // // Test Error Handling during Ticket Creation (Example: exceeding attachment limit)
-  // test("throws error for exceeding attachment limit", async () => {
-  //   const ticketData = {
-  //     subject: "Test Ticket",
-  //     body: "This is a test ticket",
-  //     attachments: [{}, {}, {}],
-  //   };
+  test("throws error for missing message in ticket data", async () => {
+    const ticketData = {
+      subject: "Test Ticket",
+      topic: "velianet-support",
+      message: null,
+      files: [],
+    };
 
-  //   expect.assertions(1); // Only expect one assertion (the thrown error)
+    axios.post.mockRejectedValue(createTicketInvalidMessageResponse);
 
-  //   try {
-  //     await adapter.createTicket(ticketData);
-  //   } catch (error) {
-  //     expect(error.message).toBe("Maximum 2 attachments allowed per ticket.");
-  //   }
-  // });
+    try {
+      await adapter.createTicket(ticketData);
+      fail("Error: Missing Ticket Subject was not thrown");
+    } catch (error) {
+      expect(error.message).toEqual("Error: Missing Ticket Message");
+    }
+  });
+
+  // Test Error Handling during Ticket Creation (Example: exceeding attachment limit)
+  test("throws error for exceeding attachment limit", async () => {
+    const ticketData = {
+      subject: "Test Ticket with Attachment",
+      topic: "velianet-support",
+      message: "Test ticket body",
+      files: [{}, {}, {}, {}, {}, {}],
+    };
+
+    expect.assertions(1); // Only expect one assertion (the thrown error)
+
+    try {
+      await adapter.createTicket(ticketData);
+    } catch (error) {
+      expect(error.message).toBe("Maximum limit of 5 files reached.");
+    }
+  });
 });
 
-// describe("Get Velia Ticket", () => {
-//   test("retrieves a ticket by ID", async () => {
-//     axios.get.mockResolvedValueOnce(getTicketValidResponse); // Mock axios.get behavior
+describe("Get Velia Ticket", () => {
+  test("retrieves a ticket by ID", async () => {
+    axios.get.mockResolvedValueOnce(getTicketValidResponse); // Mock axios.get behavior
 
-//     const ticketId = 3391;
+    const ticketId = 471075;
 
-//     const retrievedTicket = await adapter.getTicket(ticketId);
+    const retrievedTicket = await adapter.getTicket(ticketId);
 
-//     expect(retrievedTicket).toEqual({
-//       author_email: "(no author)",
-//       body: "Test",
-//       subject: "TEST",
-//       department: "General Support",
-//       status: "Open",
-//       priority: "Normal",
-//       comments: [
-//         {
-//           id: 4458,
-//           ticket_id: "3391",
-//           body: "TEST2",
-//           author_email: "",
-//           created_on: "2021-11-26T13:15:32+00:00",
-//         },
-//       ],
-//       id: "3391",
-//       created_on: "2021-11-26T12:46:11+00:00",
-//     });
-//     expect(axios.get).toHaveBeenCalledWith(
-//       `${veliaConfig.baseUrl}/tickets/${ticketId}`,
-//       // Validate request body structure
-//       {
-//         headers: {
-//           // Validate headers including X-Api-Token
-//           Accept: "application/json",
-//           "X-Api-Token": veliaConfig.apiKey, // Replace with mock-api-key if needed for testing
-//         },
-//       }
-//     );
-//   });
+    expect(retrievedTicket).toEqual({
+      ticket: {
+        id: 471075,
+        queue: "velianet-support",
+        status: "resolved",
+        subject: "Test ticket",
+        priority: 20,
+        requestors: [],
+        cc: [],
+        created: "2024-04-26T10:24:51+00:00",
+        due: null,
+        resolved: "2024-04-26T10:28:18+00:00",
+        updated: "2024-04-26T10:28:18+00:00",
+        server: null,
+      },
+      history: [
+        {
+          id: 1,
+          content: "string",
+          created: "2024-04-26T10:24:52+02:00",
+          staffResponse: true,
+          attachments: null,
+        },
+        {
+          id: 2,
+          content: "Please close this ticket as it is an API test.",
+          created: "2024-04-26T10:26:27+02:00",
+          staffResponse: true,
+          attachments: null,
+        },
+      ],
+    });
+    expect(axios.get).toHaveBeenCalledWith(
+      `${veliaConfig.baseUrl}/ticket/${ticketId}`,
+      // Validate request body structure
+      {
+        headers: {
+          // Validate headers including X-Api-Token
+          Accept: "application/json",
+          "Authorization": veliaConfig.apiKey, // Replace with mock-api-key if needed for testing
+        },
+      }
+    );
+  });
 
-//   test("throws error for Invalid Ticket ID type (400)", async () => {
-//     const ticketId = "e";
+  test("throws error for Invalid Ticket ID type (404)", async () => {
+    const ticketId = "e";
 
-//     axios.get.mockResolvedValueOnce(getTicketInvalidTicketIdTypeResponse);
+    axios.get.mockRejectedValue(getTicketInvalidTicketIdTypeResponse);
 
-//     try {
-//       await adapter.getTicket(ticketId);
-//       fail("Error: Ticket not found was not thrown");
-//     } catch (error) {
-//       expect(error.message).toEqual(
-//         "400 Ticket ID Type Invalid: Path parameter ticket_id needs to be numeric"
-//       );
-//     }
-//   });
+    try {
+      await adapter.getTicket(ticketId);
+      fail("Error: Ticket not found was not thrown");
+    } catch (error) {
+      expect(error.message).toEqual(
+        "Error: Invalid Ticket ID Type"
+      );
+    }
+  });
 
-//   test("throws error for Invalid API key (401)", async () => {
-//     const adapter = new _VeliaDataCenterAdapter({
-//       baseUrl: "https://api.ingenuitycloudservices.com/rest-api",
-//       apiKey: null,
-//     });
-//     const ticketId = "12345";
+  test("throws error for Invalid API key (401)", async () => {
+    const adapter = new _VeliaDataCenterAdapter({
+      baseUrl: "http://localhost",
+      apiKey: null,
+    });
+    const ticketId = "12345";
 
-//     axios.get.mockResolvedValueOnce(invalidApiKey);
+    axios.get.mockRejectedValue(invalidApiKey);
 
-//     try {
-//       await adapter.getTicket(ticketId);
-//       fail("Error: 401 Unauthorized was not thrown");
-//     } catch (error) {
-//       expect(error.message).toEqual(
-//         "401 Failed to retrieve ticket: Invalid API Key"
-//       );
-//     }
-//   });
+    try {
+      await adapter.getTicket(ticketId);
+      fail("Error: 401 Unauthorized was not thrown");
+    } catch (error) {
+      expect(error.message).toEqual(
+        "Failed to retrieve ticket: 401 Unauthenticated error"
+      );
+    }
+  });
 
-//   test("throws error for non-existent ticket (404)", async () => {
-//     const ticketId = "12345";
+  test("throws error for non-existent ticket (404)", async () => {
+    const ticketId = "12345";
 
-//     axios.get.mockResolvedValueOnce(getTicketInvalidTicketNotFoundResponse);
+    axios.get.mockRejectedValue(getTicketInvalidTicketNotFoundResponse);
 
-//     try {
-//       await adapter.getTicket(ticketId);
-//       fail("Error: Ticket not found was not thrown");
-//     } catch (error) {
-//       expect(error.message).toEqual("Ticket not found: 12345");
-//     }
-//   });
-// });
+    try {
+      await adapter.getTicket(ticketId);
+      fail("Error: Ticket not found was not thrown");
+    } catch (error) {
+      expect(error.message).toEqual("Ticket not found: 12345");
+    }
+  });
+});
