@@ -154,7 +154,7 @@ class _100TBDataCenterAdapter extends DataCenterClient {
         // The request was made and the server responded with a status code
         // that falls outside the validated range
         console.error(
-          `${error.response.status} Error Creating ticket:`,
+          `${error.response.status} Error Retrieving ticket:`,
           error.response.data.message
         );
 
@@ -186,7 +186,7 @@ class _100TBDataCenterAdapter extends DataCenterClient {
           throw new Error(`Ticket not found: ${ticketId}`); // Informative message for 404
         } else {
           // Handle other unexpected errors
-          throw new Error(`Failed to create ticket: ${error.message}`);
+          throw new Error(`Failed to retrieve ticket: ${error.message}`);
         }
       } else if (error.request) {
         // The request was made but no response was received
