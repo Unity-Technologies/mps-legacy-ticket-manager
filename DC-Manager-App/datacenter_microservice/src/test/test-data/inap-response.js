@@ -110,8 +110,10 @@ const getTicketValidResponse = {
 };
 
 const getTicketInvalidTicketIdResponse = {
-  status: 404,
-  data: { code: 404, message: "Client Error: Unable to retrieve case e" },
+  response: {
+    status: 404,
+    data: { code: 404, message: "Client Error: Unable to retrieve case e" },
+  },
 };
 
 const getTicketInvalidTicketForOtherCompanyResponse = {
