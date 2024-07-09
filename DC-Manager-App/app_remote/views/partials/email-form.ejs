@@ -1,0 +1,44 @@
+<h3 id="form-title"></h3>
+<div class="form-control">
+  <label for="subject">Subject</label>
+  <input type="text" id="subject" name="subject" placeholder="Subject" />
+  <i class="fa fa-check-circle"></i>
+  <i class="fa fa-exclamation-circle"></i>
+  <small>Error message</small>
+</div>
+<div class="form-control">
+  <label id="priority-level-label" for="priority-level">Priority Level</label>
+  <select id="priority-level" name="priority">
+    <option value="" disabled selected data-default>
+      Select Priority Level
+    </option>
+    <option value="urgent">Urgent</option>
+    <option value="high">High</option>
+    <option value="normal">Normal</option>
+    <option value="low">Low</option>
+  </select>
+  <i class="fa fa-check-circle"></i>
+  <i class="fa fa-exclamation-circle"></i>
+  <small>Error message</small>
+</div>
+<div class="form-control">
+  <label for="body">Message</label>
+  <textarea
+    name="comment"
+    id="body"
+    placeholder="Message to DC Here"
+  ></textarea>
+  <i class="fa fa-check-circle"></i>
+  <i class="fa fa-exclamation-circle"></i>
+  <small>Error message</small>
+</div>
+<div class="form-control">
+  <label for="attachment">Attachments</label>
+  <button type="button" id="file-button"><i class="fa fa-plus"></i>Select files</button>
+  <input type="file" name="attachments" id="attachment" />
+  <div id="file-list"></div>
+  <i class="fa fa-check-circle"></i>
+  <i class="fa fa-exclamation-circle"></i>
+  <small>Error message</small>
+</div>
+<button type="submit">Submit</button>

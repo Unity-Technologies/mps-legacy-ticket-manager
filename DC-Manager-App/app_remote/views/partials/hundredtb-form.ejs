@@ -1,0 +1,41 @@
+<h3 id="form-title"></h3>
+<input type="hidden" id="submit-via-api" name="submitViaAPI" value="true" />
+<div class="form-control">
+  <label for="subject">Subject</label>
+  <input type="text" id="subject" name="subject" placeholder="Subject" />
+  <i class="fa fa-check-circle"></i>
+  <i class="fa fa-exclamation-circle"></i>
+  <small>Error message</small>
+</div>
+<div class="form-control">
+  <label id="priority-level-label" for="priority-level">Priority Level</label>
+  <select id="priority-level" name="priority">
+    <option value="" disabled selected data-default>
+      Select Priority Level
+    </option>
+    <option value="3">Urgent</option>
+    <option value="2">High</option>
+    <option value="1">Normal</option>
+    <option value="0">Low</option>
+  </select>
+  <i class="fa fa-check-circle"></i>
+  <i class="fa fa-exclamation-circle"></i>
+  <small>Error message</small>
+</div>
+<div class="form-control">
+  <label for="body">Message</label>
+  <textarea name="body" id="body" placeholder="Message to DC Here"></textarea>
+  <i class="fa fa-check-circle"></i>
+  <i class="fa fa-exclamation-circle"></i>
+  <small>Error message</small>
+</div>
+<div class="form-control">
+  <label for="attachment">Attachments</label>
+  <button type="button" id="file-button"><i class="fa fa-plus"></i>Select files</button>
+  <input type="file" name="attachments" id="attachment" multiple />
+  <div id="file-list"></div>
+  <i class="fa fa-check-circle"></i>
+  <i class="fa fa-exclamation-circle"></i>
+  <small>Error message</small>
+</div>
+<button type="submit">Submit</button>

@@ -1,0 +1,28 @@
+<h3 id="form-title"></h3>
+<input type="hidden" id="submit-via-api" name="submitViaAPI" value="true" />
+<div class="form-control">
+  <label id="priority-level-label" for="priority-level">Priority Level</label>
+  <select id="priority-level" name="priority">
+    <option value="" disabled selected data-default>
+      Select Priority Level
+    </option>
+    <option value="URGENT">Urgent</option>
+    <option value="HIGH">High</option>
+    <option value="NORMAL">Normal</option>
+  </select>
+  <i class="fa fa-check-circle"></i>
+  <i class="fa fa-exclamation-circle"></i>
+  <small>Error message</small>
+</div>
+<div class="form-control">
+  <label for="body">Message</label>
+  <textarea
+    name="message"
+    id="body"
+    placeholder="Message to DC Here"
+  ></textarea>
+  <i class="fa fa-check-circle"></i>
+  <i class="fa fa-exclamation-circle"></i>
+  <small>Error message</small>
+</div>
+<button type="submit">Submit</button>
