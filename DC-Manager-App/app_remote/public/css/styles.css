@@ -1,0 +1,315 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+}
+
+.header {
+  background-color: #f7f7f7;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure the header stays above other content */
+}
+
+.header h2 {
+  margin: 0;
+}
+
+#back-btn {
+  margin: 0;
+  border-width: 0;
+  background-color: #f7f7f7;
+  padding: 5px 10px;
+  font-size: 1.1em;
+}
+
+#back-btn:hover {
+    color: #2196f3;
+    cursor: pointer;
+}
+
+.form {
+  padding: 20px 32px;
+}
+
+.form-control {
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.form-control label {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-size: 0.89em;
+  font-weight: 600;
+}
+
+.form-control input,
+select,
+textarea {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  padding: 10px 30px 10px 10px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+}
+
+.form-control input:hover,
+select:hover,
+textarea:hover {
+  border-color: #2196f3;
+}
+
+.form-control input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2196f3;
+}
+
+.form-control input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: #2196f3;
+}
+
+.form-control.success input {
+  border-color: #2ecc71;
+}
+
+.form-control.error input {
+  border-color: #e74c3c;
+}
+
+.form-control textarea {
+  padding-top: 20px;
+  height: 300px;
+}
+
+.form-control #ip-address {
+  height: auto;
+}
+
+.form-control #logs {
+  height: auto;
+}
+
+.form-control.success select {
+  border-color: #2ecc71;
+}
+
+.form-control.error select {
+  border-color: #e74c3c;
+}
+
+.form-control.success textarea {
+  border-color: #2ecc71;
+}
+
+.form-control.error textarea {
+  border-color: #e74c3c;
+}
+
+.form-control.success #file-button {
+  border-color: #2ecc71;
+}
+
+.form-control.error #file-button {
+  border-color: #e74c3c;
+}
+
+.form-control i {
+  visibility: hidden;
+  position: absolute;
+  top: 35px;
+  right: 20px;
+}
+
+.form-control label[for="attachment"] ~ #file-button i {
+  visibility: visible;
+  position: static;
+  margin: 0 5px 0 0;
+}
+
+.form-control.success i.fa-check-circle {
+  visibility: visible;
+  color: #2ecc71;
+}
+
+.form-control.error i.fa-exclamation-circle {
+  visibility: visible;
+  color: #e74c3c;
+}
+
+.form-control small {
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.form-control.error small {
+  visibility: visible;
+  color: #e74c3c;
+}
+
+.form button {
+  display: block;
+  border: 2px solid #acacac;
+  border-radius: 5px;
+  width: 100%;
+  padding: 7px 6px;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: bold;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  color: #686868;
+  background-color: #fffefe;
+}
+
+.form button:hover {
+  background-color: #2196f3;
+  color: white;
+  border-color: #2196f3;
+}
+
+.hidden {
+  display: none;
+}
+
+hr {
+  margin: 20px 0 40px 0;
+  border-color: #f0f0f0;
+}
+
+.data-center-form h3 {
+  margin: 20px 0 15px 0;
+  font-size: 0.98em;
+}
+
+#file-button {
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  color: #686868;
+  transition: border-color 0.3s;
+}
+
+#file-button:hover {
+  border-color: #2196f3;
+  background-color: #f0f8ff;
+}
+
+#drop-zone p {
+  margin: 0;
+  font-size: 16px;
+  color: #888;
+}
+
+#drop-zone.dragover {
+  border-color: #2196f3;
+  background-color: #f0f8ff;
+}
+
+#attachment {
+  display: none;
+}
+
+#file-list {
+  margin-top: 10px;
+}
+
+#file-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#file-list li {
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#file-list li span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80%;
+  display: inline-block;
+}
+
+#file-list li button {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 14px;
+  cursor: pointer;
+  max-width: 80px;
+}
+
+#file-list li button:hover {
+  text-decoration: underline;
+}
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+textarea::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+textarea::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+  border-radius: 10px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb when hovered */
+}
+
+/* For Firefox */
+textarea {
+  scrollbar-width: thin; /* Scrollbar width: auto, thin, or none */
+  scrollbar-color: #888 #f1f1f1; /* thumb color and track color */
+}
+
+/* Optional: Add a transition effect for smooth scrolling */
+textarea::-webkit-scrollbar-thumb {
+  transition: background-color 0.3s;
+}
