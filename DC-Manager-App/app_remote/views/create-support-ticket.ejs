@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="header">
+      <a href="/sidebar?<%= qs %>"
+        ><button type="button" id="back-btn">
+          <i class="fa fa-chevron-left"></i></button
+      ></a>
+      <h2>Create New Ticket</h2>
+    </div>
+
+    <form
+      class="form"
+      id="form"
+      action="/tickets/new?<%= qs %>"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <div class="form-control">
+        <label id="data-center-label" for="data-center">Data Center</label>
+        <select id="data-center" name="dataCenter">
+          <option value="" disabled selected data-default>
+            Select Provider
+          </option>
+          <option value="hundredtb">100TB</option>
+          <option value="velia">Velia</option>
+          <option value="inap">INAP</option>
+          <option value="i3d">i3d</option>
+          <option value="performive">Performive</option>
+          <option value="psychz">Psychz</option>
+          <option value="datapacket">Datapacket</option>
+          <option value="zenlayer">Zenlayer</option>
+          <option value="hivelocity">Hivelocity</option>
+          <option value="rapidswitch">Rapidswitch</option>
+          <option value="serversdotcom">Servers.com</option>
+          <option value="gcore">GCore</option>
+          <option value="maxihost">Maxihost</option>
+          <option value="vultr">Vultr</option>
+          <option value="leaseweb">Leaseweb</option>
+          <option value="enzu">Enzu</option>
+        </select>
+        <i class="fa fa-check-circle"></i>
+        <i class="fa fa-exclamation-circle"></i>
+        <small>Error message</small>
+      </div>
+      <div class="form-control">
+        <label id="issue-category-label" for="issue-category"
+          >Issue Category</label
+        >
+        <select id="issue-category" name="issueCategory">
+          <option value="" disabled selected data-default>
+            Select Issue Category
+          </option>
+          <option value="Custom Issue">Custom Issue</option>
+          <option value="Machine reporting unreachable">
+            Machine reporting unreachable
+          </option>
+          <option value="CPU Governor Errors & OS CPU Scaling">
+            CPU Governor Errors & OS CPU Scaling
+          </option>
+          <option value="CPU high temperature">CPU high temperature</option>
+          <option value="Low CPU Frequency">Low CPU Frequency</option>
+          <option value="RAM Issues">RAM Issues</option>
+          <option value="Disk shows I/O errors">Disk shows I/O errors</option>
+          <option value="Read-only file system error">
+            Read-only file system error
+          </option>
+          <option value="Abuse Report">Abuse Report</option>
+          <option value="Network Interface Card Error">
+            Network Interface Card Error
+          </option>
+          <option value="BIOS Settings Error">BIOS Settings Error</option>
+          <option value="OS Reinstall">OS Reinstall</option>
+        </select>
+        <i class="fa fa-check-circle"></i>
+        <i class="fa fa-exclamation-circle"></i>
+        <small>Error message</small>
+      </div>
+      <input type="hidden" id="zendesk-user-email" name="zendeskUserEmail" />
+      <input type="hidden" id="zendesk-username" name="zendeskUsername" />
+      <input type="hidden" id="zendesk-user-id" name="assigneeId" />
+      <input type="hidden" id="data-center-name" name="dataCenterName" />
+      <div class="form-control">
+        <label for="zendesk-ticket-id">Zendesk Ticket ID</label>
+        <input
+          type="text"
+          id="zendesk-ticket-id"
+          name="zendeskTicketId"
+          placeholder="Zendesk Ticket ID"
+        />
+        <i class="fa fa-check-circle"></i>
+        <i class="fa fa-exclamation-circle"></i>
+        <small>Error message</small>
+      </div>
+      <hr />
+      <div class="form-control hidden" id="ip-address-container">
+        <label for="ip-address">IP Address(es)</label>
+        <textarea id="ip-address" rows="3"></textarea>
+        <i class="fa fa-check-circle"></i>
+        <i class="fa fa-exclamation-circle"></i>
+        <small>Error message</small>
+      </div>
+
+      <div class="form-control hidden" id="os-version-container">
+        <label for="os-version">OS Version</label>
+        <select id="os-version">
+          <option value="" disabled selected data-default>
+            Select OS Version
+          </option>
+          <option value="Linux Ubuntu 18.04 LTS">Linux Ubuntu 18.04 LTS</option>
+          <option value="Linux Ubuntu 20.04 LTS">Linux Ubuntu 20.04 LTS</option>
+          <option value="Linux Ubuntu 22.04 LTS">Linux Ubuntu 22.04 LTS</option>
+          <option value="Linux Ubuntu 24.04 LTS">Linux Ubuntu 24.04 LTS</option>
+          <option value="Win64 Windows Server 2012 Standard">Win64 Windows Server 2012 Standard</option>
+          <option value="Win64 Windows Server 2019 Standard">Win64 Windows Server 2019 Standard</option>
+          <option value="Win64 Windows Server 2022 Standard">Win64 Windows Server 2022 Standard</option>
+          <option value="Win64 Windows Server 2012 Datacenter">Win64 Windows Server 2012 Datacenter</option>
+          <option value="Win64 Windows Server 2019 Datacenter">Win64 Windows Server 2019 Datacenter</option>
+          <option value="Win64 Windows Server 2022 Datacenter">Win64 Windows Server 2022 Datacenter</option>
+        </select>
+        <i class="fa fa-check-circle"></i>
+        <i class="fa fa-exclamation-circle"></i>
+        <small>Error message</small>
+      </div>
+
+      <div class="form-control hidden" id="logs-container">
+        <label for="logs">Logs</label>
+        <textarea id="logs" rows="5"></textarea>
+        <i class="fa fa-check-circle"></i>
+        <i class="fa fa-exclamation-circle"></i>
+        <small>Error message</small>
+      </div>
+      <div class="data-center-form" id="dataCenterForm"></div>
+    </form>
+
+    <script src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
+    <script src="/static/js/main.js"></script>
+
+    <% if (typeof error_msg !== 'undefined') { %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const msg = "<%= error_msg %>";
+        client.invoke("notify", msg, "error", 5000);
+      });
+    </script>
+    <% } %> <% if (typeof success_msg !== 'undefined') { %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const msg = "<%= success_msg %>";
+        client.invoke("notify", msg);
+      });
+    </script>
+    <% } %>
+  </body>
+</html>
