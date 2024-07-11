@@ -301,6 +301,17 @@ const getGroups = async (authEmail) => {
   }
 };
 
+const verifyAuth = async (authEmail, userId) => {
+  try {
+    // Make a simple request to verify authentication
+    await makeZendeskRequest(`users/${userId}.json`, "GET", null, authEmail);
+    return true;
+  } catch (error) {
+    console.error("Error verifying Zendesk auth:", error);
+    return false;
+  }
+};
+
 module.exports = {
   makeZendeskRequest,
   getTicket,
@@ -312,4 +323,5 @@ module.exports = {
   createDcTicketComment,
   updateTicket,
   getGroups,
+  verifyAuth,
 };
