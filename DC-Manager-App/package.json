@@ -4,7 +4,8 @@
   "description": "My Zendesk application",
   "main": "index.js",
   "scripts": {
-    "start": "node app_remote/index.js"
+    "start": "node app_remote/index.js",
+    "dev": "nodemon app_remote/index.js"
   },
   "dependencies": {
     "@keeper-security/secrets-manager-core": "^16.6.2",
