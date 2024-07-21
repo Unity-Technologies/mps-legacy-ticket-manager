@@ -1,4 +1,4 @@
-import { messageTemplates, getTemplateVars } from './template.js';
+import { messageTemplates, getTemplateVars } from "./template.js";
 
 export function validateForm() {
   const dataCenter = document.querySelector("#data-center");

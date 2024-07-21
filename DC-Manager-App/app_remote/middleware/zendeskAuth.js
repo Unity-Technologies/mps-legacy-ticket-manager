@@ -10,7 +10,7 @@ const checkZendeskAuth = async (req, res, next) => {
     res.cookie("my_app_params", qs, { httpOnly: true });
   
     if (!authEmail || !userId) {
-        error_msg = `Authentication details missing`;
+        error_msg = "Authentication details missing";
         return res.render("create-support-ticket", { qs, error_msg });
     }
   

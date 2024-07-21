@@ -151,7 +151,7 @@ const getTickets = async (pageIndex, pageSize) => {
         // Handle specific 400 errors based on the message
         if (
           error.response.data.errors[0].message.includes(
-            'invalid value null at "input.id"'
+            "invalid value null at \"input.id\""
           )
         ) {
           throw new Error("Error retrieving DataPacket ticket: Ticket ID is null");
@@ -163,7 +163,7 @@ const getTickets = async (pageIndex, pageSize) => {
           throw new Error("Error retrieving DataPacket ticket: Ticket ID is a non-integer value");
         } else if (
           error.response.data.errors[0].message.includes(
-            'Field "id" of required type "Int!" was not provided'
+            "Field \"id\" of required type \"Int!\" was not provided"
           )
         ) {
           throw new Error("Error retrieving DataPacket ticket: Ticket ID is empty");

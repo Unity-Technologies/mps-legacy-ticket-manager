@@ -1,8 +1,8 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const ticketRoutes = require('./routes/ticketRoutes');
-const dashboardRoutes = require('./routes/dashboardRoutes');
-const errorHandler = require('./middleware/errorHandler');
+const ticketRoutes = require("./routes/ticketRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
+const errorHandler = require("./middleware/errorHandler");
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
@@ -19,9 +19,9 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 
 const port = process.env.PORT || 3000;
 
-app.use('/sidebar', dashboardRoutes);
+app.use("/sidebar", dashboardRoutes);
 
-app.use('/tickets', ticketRoutes);
+app.use("/tickets", ticketRoutes);
 
 app.use(errorHandler);
 

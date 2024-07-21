@@ -1,15 +1,10 @@
 // app_remote/test/datapacketService.test.js
 
-const { createTicket, getTickets } = require("../services/dataCenterService/datapacketService.js");
+const { createTicket } = require("../services/dataCenterService/datapacketService.js");
 const {
   createTicketValidResponse,
   createTicketInvalidMessageResponse,
   createTicketInvalidPriorityResponse,
-  getTicketValidResponse,
-  getTicketInvalidTicketIdResponse,
-  getTicketInvalidNullTicketIdResponse,
-  getTicketInvalidMissingTicketIdResponse,
-  invalidApiKey,
 } = require("./test-data/datapacketResponse.js");
 
 const axios = require("axios");

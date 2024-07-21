@@ -4,10 +4,6 @@ const {
   createTicketInvalidSubjectResponse,
   createTicketInvalidBodyResponse,
   createTicketInvalidPriorityResponse,
-  getTicketValidResponse,
-  getTicketInvalidTicketIdResponse,
-  getTicketInvalidTicketForOtherCompanyResponse,
-  invalidApiKey,
 } = require("./test-data/inapResponse.js");
 const axios = require("axios");
 const config = require("../../config/apiConfig");

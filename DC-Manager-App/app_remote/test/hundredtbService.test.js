@@ -2,13 +2,8 @@ const axios = require("axios");
 const { createTicket } = require("../services/dataCenterService/hundredtbService");
 const { 
   createTicketValidResponse,
-  createTicketInvalid500Response,
   createTicketInvalidSubjectResponse,
   createTicketInvalidBodyResponse,
-  getTicketValidResponse,
-  getTicketInvalidTicketIdTypeResponse,
-  getTicketInvalidTicketNotFoundResponse,
-  invalidApiKey,
 } = require("./test-data/hundredtbResponse");
 
 const config = require("../../config/apiConfig");
