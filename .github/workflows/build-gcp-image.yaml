@@ -1,0 +1,37 @@
+name: Build GCP Images
+on:
+  release:
+    types: [published]
+env:
+  BUILD_TAG: dc-ticket-manager
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ${{ github.workspace }}/DC-Manager-App
+
+      - name: Build Docker Image
+        run: > 
+          docker build -t $BUILD_TAG 
+          ${{ github.workspace }}/DC-Manager-App
+
+      - name: Run Docker Container
+        run: >
+          docker run --rm
+          -e GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GCP_TOKEN }}'
+          -v ${{ github.workspace }}:/app
+          $BUILD_TAG
+
+      - name: Cleanup Docker Image
+        run: docker rmi $BUILD_TAG
