@@ -171,7 +171,7 @@ const createTicket = async (
     };
 
     const response = await makeZendeskRequest(
-      `tickets`,
+      "tickets",
       "POST",
       payload,
       authEmail
@@ -231,7 +231,7 @@ const createDcTicketComment = async (
       attachments.forEach((attachment) => {
         uploadAttachment(attachment, authEmail).then((response) => {
           payload.ticket.comment.uploads = [response];
-          console.log(payload.ticket.comment.uploads)
+          console.log(payload.ticket.comment.uploads);
           setTimeout(async () => {
             return await makeZendeskRequest(
               `tickets/${ticketId}`,
@@ -288,7 +288,7 @@ const getGroups = async (authEmail) => {
   try {
     // Make a request to get the ticket details
     const currentGroups = await makeZendeskRequest(
-      `groups`,
+      "groups",
       "GET",
       null,
       authEmail

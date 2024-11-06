@@ -1,0 +1,40 @@
+name: Build and Push to Artifact Registry
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: mps-sup-prd
+  REGION: europe-west2
+  GAR_LOCATION: europe-west2-docker.pkg.dev/mps-sup-prd/dc-ticket-tool
+
+jobs:
+  build-push-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+      
+      - id: "auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
+
+      - name: "Docker auth"
+        run: |-
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build image
+        run: docker build . --file ${{ github.workspace }}/DC-Manager-App/Dockerfile --tag ${{ env.GAR_LOCATION }}
+        working-directory: ${{ github.workspace }}/DC-Manager-App
+        
+      - name: Push image
+        run: docker push ${{ env.GAR_LOCATION }}

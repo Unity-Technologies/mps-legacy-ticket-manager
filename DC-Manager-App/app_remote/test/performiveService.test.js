@@ -1,12 +1,7 @@
 const performiveService = require("../services/dataCenterService/performiveService");
 const {
   createTicketValidResponse,
-  createTicketInvalid500Response,
   createTicketInvalidSubjectOrBodyResponse,
-  getTicketValidResponse,
-  getTicketInvalidTicketIdResponse,
-  getTicketInvalidTicketNotFoundResponse,
-  invalidApiKey,
 } = require("./test-data/performiveResponse");
 const axios = require("axios");
 const config = require("../../config/apiConfig");

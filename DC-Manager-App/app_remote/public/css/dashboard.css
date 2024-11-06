@@ -1,46 +1,47 @@
 #dashboard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #dashboard a {
-    text-decoration: none;
-    width: 200px;
+  text-decoration: none;
+  width: 200px;
 }
 
 #dashboard p {
-    font-size: 14px;
-    font-weight: 400;
-    color:#333333;
-    font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,Arial,sans-serif;
-    line-height: 20px;
-    min-width: 210px;
-    max-width: 300px;
-    margin: 5px auto 20px auto;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  line-height: 20px;
+  min-width: 210px;
+  max-width: 300px;
+  margin: 5px auto 20px;
 }
 
 #dashboard button {
-    margin: auto;
-    display: block;
-    border: 2px solid #acacac;
-    border-radius: 5px;
-    min-width: 200px;
-    height: 32px;
-    font-size: 12px;
-    font-weight: bold;
-    transition-duration: 0.4s;
-    color: #686868;
-    background-color: #fffefe;
+  margin: auto;
+  display: block;
+  border: 2px solid #acacac;
+  border-radius: 5px;
+  min-width: 200px;
+  height: 32px;
+  font-size: 12px;
+  font-weight: bold;
+  transition-duration: 0.4s;
+  color: #686868;
+  background-color: #fffefe;
 }
 
 #dashboard button:hover {
-    background-color: #2196F3;
-    color: white;
-    border-color: #2196F3;
-    cursor: pointer;
+  background-color: #2196f3;
+  color: white;
+  border-color: #2196f3;
+  cursor: pointer;
 }
 
 #dashboard i {
-    margin: 0 5px 0 0;
+  margin: 0 5px 0 0;
 }

@@ -68,7 +68,7 @@ const createTicket = async (ticketData) => {
         // Adapt attachment data to the format expected by the 100TB API
         mime: attachment.mimetype,
         name: attachment.originalname,
-        file: attachment.buffer.toString('base64'),
+        file: attachment.buffer.toString("base64"),
       };
     }),
   };

@@ -19,7 +19,7 @@ const createTicketInvalidMessageResponse = {
       errors: [
         {
           message:
-            'Variable "$input" got invalid value null at "input.message"; Expected non-nullable type "String!" not to be null.',
+            "Variable \"$input\" got invalid value null at \"input.message\"; Expected non-nullable type \"String!\" not to be null.",
           extensions: {
             processId: ["9508ac57-d4fd-4016-a0c6-786a0692f14d"],
             code: "GRAPHQL_VALIDATION_FAILED",
@@ -37,7 +37,7 @@ const createTicketInvalidPriorityResponse = {
       errors: [
         {
           message:
-            'Variable "$input" got invalid value null at "input.priority"; Expected non-nullable type "SupportRequestPriority!" not to be null.',
+            "Variable \"$input\" got invalid value null at \"input.priority\"; Expected non-nullable type \"SupportRequestPriority!\" not to be null.",
           extensions: {
             processId: ["9508ac57-d4fd-4016-a0c6-786a0692f1r5"],
             code: "GRAPHQL_VALIDATION_FAILED",
@@ -87,7 +87,7 @@ const getTicketInvalidTicketIdResponse = {
       errors: [
         {
           message:
-            'Variable "$input" got invalid value "e" at "input.id"; Int cannot represent non-integer value: "e"',
+            "Variable \"$input\" got invalid value \"e\" at \"input.id\"; Int cannot represent non-integer value: \"e\"",
           extensions: {
             processId: ["12345"],
             code: "GRAPHQL_VALIDATION_FAILED",
@@ -105,7 +105,7 @@ const getTicketInvalidNullTicketIdResponse = {
       errors: [
         {
           message:
-            'Variable "$input" got invalid value null at "input.id"; Expected non-nullable type "Int!" not to be null.',
+            "Variable \"$input\" got invalid value null at \"input.id\"; Expected non-nullable type \"Int!\" not to be null.",
           extensions: {
             processId: ["12345"],
             code: "GRAPHQL_VALIDATION_FAILED",
@@ -123,7 +123,7 @@ const getTicketInvalidMissingTicketIdResponse = {
       errors: [
         {
           message:
-            'Variable "$input" got invalid value {}; Field "id" of required type "Int!" was not provided.',
+            "Variable \"$input\" got invalid value {}; Field \"id\" of required type \"Int!\" was not provided.",
           extensions: {
             processId: ["12345"],
             code: "GRAPHQL_VALIDATION_FAILED",

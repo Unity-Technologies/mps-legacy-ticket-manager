@@ -1,5 +1,5 @@
 // app_remote/test/veliaService.test.js
-const { createTicketValidResponse, createTicketInvalid500Response, createTicketInvalidSubjectResponse, createTicketInvalidAttachmentSizeResponse, createTicketInvalidTopicResponse, createTicketInvalidMessageResponse, createTicketInvalidNumberOfAttachmentsResponse } = require("./test-data/veliaResponse.js");
+const { createTicketValidResponse, createTicketInvalidSubjectResponse, createTicketInvalidAttachmentSizeResponse, createTicketInvalidTopicResponse, createTicketInvalidMessageResponse, createTicketInvalidNumberOfAttachmentsResponse } = require("./test-data/veliaResponse.js");
 const axios = require("axios");
 const config = require("../../config/apiConfig");
 const { createTicket } = require("../services/dataCenterService/veliaService");
@@ -44,7 +44,7 @@ describe("Create Velia Ticket", () => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: `mock-api-token`,
+          Authorization: "mock-api-token",
         },
       }
     );

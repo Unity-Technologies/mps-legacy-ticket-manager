@@ -25,8 +25,7 @@ body {
   border-bottom: 1px solid #f0f0f0;
   display: flex;
   align-items: center;
-  padding: 20px 0;
-  position: -webkit-sticky; /* For Safari */
+  padding: 20px 0; /* For Safari */
   position: sticky;
   top: 0;
   z-index: 1000; /* Ensure the header stays above other content */
@@ -47,6 +46,27 @@ body {
 #back-btn:hover {
     color: #2196f3;
     cursor: pointer;
+}
+
+#file-button {
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  color: #686868;
+  transition: border-color 0.3s;
+}
+
+#file-button:hover {
+  border-color: #2196f3;
+  background-color: #f0f8ff;
+}
+
+/* For Firefox */
+textarea {
+  scrollbar-width: thin; /* Scrollbar width: auto, thin, or none */
+  scrollbar-color: #888 #f1f1f1; /* thumb color and track color */
 }
 
 .form {
@@ -203,28 +223,13 @@ textarea:focus-visible {
 }
 
 hr {
-  margin: 20px 0 40px 0;
+  margin: 20px 0 40px;
   border-color: #f0f0f0;
 }
 
 .data-center-form h3 {
-  margin: 20px 0 15px 0;
+  margin: 20px 0 15px;
   font-size: 0.98em;
-}
-
-#file-button {
-  border: 2px dashed #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  font-size: 14px;
-  text-align: center;
-  color: #686868;
-  transition: border-color 0.3s;
-}
-
-#file-button:hover {
-  border-color: #2196f3;
-  background-color: #f0f8ff;
 }
 
 #drop-zone p {
@@ -297,19 +302,9 @@ textarea::-webkit-scrollbar-track {
 textarea::-webkit-scrollbar-thumb {
   background: #888; /* Color of the scrollbar thumb */
   border-radius: 10px;
+  transition: background-color 0.3s;
 }
 
 textarea::-webkit-scrollbar-thumb:hover {
   background: #555; /* Color of the scrollbar thumb when hovered */
-}
-
-/* For Firefox */
-textarea {
-  scrollbar-width: thin; /* Scrollbar width: auto, thin, or none */
-  scrollbar-color: #888 #f1f1f1; /* thumb color and track color */
-}
-
-/* Optional: Add a transition effect for smooth scrolling */
-textarea::-webkit-scrollbar-thumb {
-  transition: background-color 0.3s;
 }

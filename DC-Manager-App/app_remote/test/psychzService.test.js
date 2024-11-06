@@ -5,15 +5,11 @@ const config = require("../../config/apiConfig");
 
 const {
   createTicketValidResponse,
-  createTicketInvalid500Response,
   createTicketInvalidSubjectResponse,
   createTicketInvalidAttachmentSizeResponse,
   createTicketInvalidDepartmentIdResponse,
   createTicketInvalidMessageResponse,
   createTicketInvalidNumberOfAttachmentsResponse,
-  getTicketValidResponse,
-  getTicketInvalidTicketIdTypeResponse,
-  getTicketInvalidTicketNotFoundResponse,
   invalidApiKey,
   invalidAccessUsername,
 } = require("./test-data/psychzResponse.js");

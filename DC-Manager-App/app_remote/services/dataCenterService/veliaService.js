@@ -1,6 +1,5 @@
 const axios = require("axios");
 const config = require("../../../config/apiConfig");
-const fs = require('fs');
 
 const allowedFileTypes = [
   "image/jpg",
@@ -55,7 +54,7 @@ const createTicket = async (ticketData) => {
             }. Allowed types are: ${allowedFileTypes.join(", ")}`
           );
         }
-        return `data:${attachment.mimetype};base64,${attachment.buffer.toString('base64')}`;
+        return `data:${attachment.mimetype};base64,${attachment.buffer.toString("base64")}`;
       }),
     };
 

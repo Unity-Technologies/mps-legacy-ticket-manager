@@ -1,19 +1,6 @@
 const axios = require("axios");
 const config = require("../../../config/apiConfig");
 
-const allowedFileTypes = [
-  "image/jpg",
-  "image/jpeg",
-  "image/png",
-  "image/tiff",
-  "image/gif",
-  "text/plain",
-  "application/pdf",
-  "application/x-pdf",
-  "application/vnd.ms-excel",
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-];
-
 const createTicket = async (ticketData) => {
   if (ticketData.attachmentIds === "") {
     ticketData.attachmentIds = [];

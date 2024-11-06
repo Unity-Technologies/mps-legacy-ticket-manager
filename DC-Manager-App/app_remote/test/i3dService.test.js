@@ -3,13 +3,8 @@ const { createTicket, attachFile } = require("../services/dataCenterService/i3dS
 const config = require("../../config/apiConfig");
 const {
   createTicketValidResponse,
-  createTicketInvalid500Response,
   createTicketInvalidSubjectResponse,
   createTicketInvalidBodyResponse,
-  getTicketValidResponse,
-  getTicketInvalidTicketIdTypeResponse,
-  getTicketInvalidTicketNotFoundResponse,
-  invalidApiKey,
 } = require("./test-data/i3dResponse");
 
 jest.mock("axios");

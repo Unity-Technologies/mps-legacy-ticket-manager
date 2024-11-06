@@ -38,7 +38,7 @@ const createTicket = async (ticketData) => {
 
       if (error.response.status === 400) {
         console.error(
-          `400 Error creating Performive ticket:`,
+          "400 Error creating Performive ticket:",
           error.response.data.reason
         );
         throw new Error(`Error: ${error.response.data.reason}`);
@@ -48,7 +48,7 @@ const createTicket = async (ticketData) => {
           error.response.data.message
         );
         throw new Error(
-          `401 Unauthorized Error for Performive: ${response.data.reason}`
+          `401 Unauthorized Error for Performive: ${error.response.data.reason}`
         );
       } else {
         // Handle other unexpected errors
