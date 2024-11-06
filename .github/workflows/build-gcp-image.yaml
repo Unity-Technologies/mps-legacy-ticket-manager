@@ -3,6 +3,7 @@ name: Build and Push to Artifact Registry
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 env:
   PROJECT_ID: mps-sup-prd
