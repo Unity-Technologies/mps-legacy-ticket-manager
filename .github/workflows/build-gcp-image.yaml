@@ -35,6 +35,6 @@ jobs:
       - name: Build image
         run: docker build . --file ${{ github.workspace }}/DC-Manager-App/Dockerfile --tag ${{ env.GAR_LOCATION }}
         working-directory: ${{ github.workspace }}/DC-Manager-App
-
+        
       - name: Push image
         run: docker push ${{ env.GAR_LOCATION }}
