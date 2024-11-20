@@ -12,6 +12,7 @@
 #dashboard p {
   font-size: 14px;
   font-weight: 400;
+  text-align: center;
   color: #333;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
@@ -19,6 +20,11 @@
   min-width: 210px;
   max-width: 300px;
   margin: 5px auto 20px;
+}
+
+#dashboard h2 {
+  margin: 0;
+  text-align: center;
 }
 
 #dashboard button {
