@@ -1,7 +1,7 @@
-let client; // Declare the client variable globally
+import { initClient } from "./ui.js";
 
 document.addEventListener("DOMContentLoaded", function () {
-  client = ZAFClient.init();
+  window.client = initClient();
 
-  client.invoke("resize", { width: "100%", height: "160px" });
+  window.client.invoke("resize", { width: "100%", height: "160px" });
 });
