@@ -1,31 +1,59 @@
-const zendeskService = require("../services/zendeskService");
+const jwt = require("jsonwebtoken");
+const config = require("../../config/apiConfig");
+const { sessionStore, WORKWEEK_IN_MILLISECONDS } = require("./sessionStore");
+const crypto = require("crypto"); // Moved to the top for better readability
 
 const checkZendeskAuth = async (req, res, next) => {
-    console.log(req.body);
-    const authEmail = req.body.zendeskUserEmail;
-    const userId = req.body.assigneeId;
-    let error_msg = "";
-
+    const token = req.body.token;
     const qs = new URLSearchParams(req.query).toString();
     res.cookie("my_app_params", qs, { httpOnly: true });
-  
-    if (!authEmail || !userId) {
-        error_msg = "Authentication details missing";
-        return res.render("create-support-ticket", { qs, error_msg });
+
+    let error_msg = "";
+    if (!token) {
+        error_msg = "Missing token. Access denied.";
+        return res.render("index", { qs, error_msg });
     }
-  
+
+    const key = config.zendesk.appPublicKey;
+    const audience = config.zendesk.appAud;
+
     try {
-      await zendeskService.verifyAuth(authEmail, userId).then(() => {
+        const payload = jwt.verify(token, key, {
+            algorithms: ["RS256"],
+            audience: audience
+        });
+        req.zendeskPayload = payload; // Attach payload to the request object for later use
+
+        // Create a session identifier and set a secure, HttpOnly cookie
+        const sessionID = generateSessionID();
+        res.cookie("session_id", sessionID, {
+            httpOnly: true,
+            secure: true,
+            maxAge: WORKWEEK_IN_MILLISECONDS, // 1 hour session
+            path: "/",
+            sameSite: "none"
+        });
+
+        storeSession(sessionID, payload);
         next();
-      }).catch((err) => {
-        error_msg = `Unauthorized: Invalid Zendesk credentials, ${err}`;
-        return res.render("create-support-ticket", { qs, error_msg });
-      });
-    } catch (error) {
-      console.error("Error verifying Zendesk auth:", error);
-      error_msg = `Internal Server Error (Zendesk Verification): ${error}`;
-      res.render("create-support-ticket", { qs, error_msg });
+    } catch (err) {
+        console.error("Invalid token:", err);
+        error_msg = "Unauthorized: Invalid Zendesk token.";
+        return res.render("index", { qs, error_msg });
     }
-  };
-  
+};
+
+// Utility function to generate a session ID
+const generateSessionID = () => {
+    return crypto.randomBytes(16).toString("hex");
+};
+
+// Function to store session data in the shared store
+const storeSession = (sessionID, payload) => {
+    sessionStore[sessionID] = {
+        data: payload,
+        expiry: Date.now() + WORKWEEK_IN_MILLISECONDS // 1 hour expiry
+    };
+};
+
 module.exports = checkZendeskAuth;
