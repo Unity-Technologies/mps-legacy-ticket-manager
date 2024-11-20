@@ -19,7 +19,7 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 
 const port = process.env.PORT || 3000;
 
-app.use("/sidebar", dashboardRoutes);
+app.use("/", dashboardRoutes);
 
 app.use("/tickets", ticketRoutes);
 
