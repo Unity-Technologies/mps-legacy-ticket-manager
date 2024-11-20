@@ -16,7 +16,7 @@ const CLOUD_RUN_URL = "https://dc-ticket-tool-877653085348.europe-west2.run.app"
 async function getIdentityToken() {
     // Create a GoogleAuth instance with the service account key file
     const auth = new GoogleAuth({
-        keyFilename: SERVICE_ACCOUNT_KEY_FILE,
+        credentials: SERVICE_ACCOUNT_KEY_FILE,
     });
 
     // Get an ID token for the target audience
