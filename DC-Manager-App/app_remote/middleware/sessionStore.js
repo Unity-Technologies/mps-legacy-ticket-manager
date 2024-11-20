@@ -1,0 +1,16 @@
+// sessionStore.js
+
+// Shared in-memory session store
+const sessionStore = {};
+const MINUTE_IN_MILLISECONDS = 60 * 1000;
+const HOUR_IN_MILLISECONDS = 60 * MINUTE_IN_MILLISECONDS;
+const DAY_IN_MILLISECONDS = 24 * HOUR_IN_MILLISECONDS;
+const WORKWEEK_IN_MILLISECONDS = 5 * DAY_IN_MILLISECONDS;
+
+module.exports = {
+  sessionStore,
+  MINUTE_IN_MILLISECONDS,
+  HOUR_IN_MILLISECONDS,
+  DAY_IN_MILLISECONDS,
+  WORKWEEK_IN_MILLISECONDS,
+};
