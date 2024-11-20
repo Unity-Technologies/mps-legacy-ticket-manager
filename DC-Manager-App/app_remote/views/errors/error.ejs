@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link rel="stylesheet" href="/static/css/styles.css" />
+  <link rel="stylesheet" href="/static/css/dashboard.css" />
+  <title>Error <%= status %></title>
+</head>
+<body>
+  <div id="dashboard">
+    <h2><%= status %> - <%= error_msg %></h2>
+    <p>
+      <%= description || "An unexpected error occurred." %>
+    </p>
+    <p>
+      Please try reloading the app by clicking the refresh icon on the top right of this side pane or contact support (Julian Titus-Glover).
+    </p>
+  </div>
+  <script src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
+  <script type="module" src="/static/js/dashboard.js"></script>
+
+  <% if (typeof error_msg !== 'undefined') { %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const msg = "<%= error_msg %>";
+        const interval = setInterval(() => {
+          if (window.client) {
+            window.client.invoke("notify", msg, "error", 5000);
+            clearInterval(interval);
+          }
+        }, 100);
+      });
+    </script>
+    <% } %> <% if (typeof success_msg !== 'undefined') { %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const msg = "<%= success_msg %>";
+        const interval = setInterval(() => {
+          if (window.client) {
+            window.client.invoke("notify", msg);
+            clearInterval(interval);
+          }
+        }, 100);
+      });
+    </script>
+    <% } %>
+</body>
+</html>
