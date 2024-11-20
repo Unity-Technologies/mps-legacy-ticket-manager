@@ -17,6 +17,32 @@
       >
     </div>
     <script src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
-    <script src="/static/js/dashboard.js"></script>
+    <script type="module" src="/static/js/dashboard.js"></script>
+
+    <% if (typeof error_msg !== 'undefined') { %>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const msg = "<%= error_msg %>";
+          const interval = setInterval(() => {
+            if (window.client) {
+              window.client.invoke("notify", msg, "error", 5000);
+              clearInterval(interval);
+            }
+          }, 100);
+        });
+      </script>
+      <% } %> <% if (typeof success_msg !== 'undefined') { %>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const msg = "<%= success_msg %>";
+          const interval = setInterval(() => {
+            if (window.client) {
+              window.client.invoke("notify", msg);
+              clearInterval(interval);
+            }
+          }, 100);
+        });
+      </script>
+      <% } %>
   </body>
 </html>
