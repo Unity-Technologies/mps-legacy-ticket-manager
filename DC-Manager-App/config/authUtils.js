@@ -1,6 +1,5 @@
 const { GoogleAuth } = require("google-auth-library");
 const axios = require("axios");
-const fs = require("fs");
 
 // Decode the base64 string
 const serviceAccountJson = Buffer.from(process.env.SERVICE_ACCOUNT_JSON_ENCODED, "base64").toString("utf-8");
@@ -33,7 +32,7 @@ async function invokeCloudRunService(endpointPath = "", method = "GET", data = n
         console.log("TOKEN:", token);
 
         // Full Cloud Run URL including endpoint path
-        const fullUrl = `${CLOUD_RUN_URL}${endpointPath}`;
+        // const fullUrl = `${CLOUD_RUN_URL}${endpointPath}`;
 
         const response = await axios({
             url: `${CLOUD_RUN_URL}${endpointPath}`,
