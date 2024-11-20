@@ -1,8 +1,15 @@
 const { GoogleAuth } = require("google-auth-library");
 const axios = require("axios");
+const fs = require("fs");
+
+// Decode the base64 string
+const serviceAccountJson = Buffer.from(process.env.SERVICE_ACCOUNT_JSON_ENCODED, "base64").toString("utf-8");
+
+// Parse it into an object
+const SERVICE_ACCOUNT_KEY_FILE = JSON.parse(serviceAccountJson);
 
 // Path to your service account key JSON file
-const SERVICE_ACCOUNT_KEY_FILE = "./service-account-credentials.json";
+// const SERVICE_ACCOUNT_KEY_FILE = "./service-account-credentials.json";
 
 // URL of your Cloud Run service
 const CLOUD_RUN_URL = "https://dc-ticket-tool-877653085348.europe-west2.run.app";
