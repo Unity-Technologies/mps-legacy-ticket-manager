@@ -25,6 +25,8 @@ const checkZendeskAuth = async (req, res, next) => {
             algorithms: ["RS256"],
             audience: audience
         });
+
+        error_msg = payload;
         req.zendeskPayload = payload; // Attach payload to the request object for later use
 
         // Create a session identifier and set a secure, HttpOnly cookie
@@ -43,7 +45,7 @@ const checkZendeskAuth = async (req, res, next) => {
         console.error("Invalid token:", err);
         // error_msg = "Unauthorized: Invalid Zendesk token.";
         // return res.render("index", { qs, error_msg });
-        const error = new Error("Unauthorized: Invalid token, could not verify token");
+        const error = new Error(`Unauthorized: Invalid token, could not verify token, PAYLOAD: ${error_msg}, KEY: ${key}, AUDIENCE: ${audience}`);
         error.status = 401; // Set the status code for the error
         return next(error);
     }
