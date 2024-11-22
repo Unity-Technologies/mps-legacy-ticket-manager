@@ -7,6 +7,7 @@ on:
 
 env:
   BUILD_TAG: dc-ticket-manager
+  BUILD_VERSION: 1.0.1
   PROJECT_ID: mps-sup-prd
   REGION: europe-west2
   GAR_LOCATION: europe-west2-docker.pkg.dev/mps-sup-prd/dc-ticket-tool
@@ -34,8 +35,8 @@ jobs:
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
       - name: Build image
-        run: docker build . --file ${{ github.workspace }}/DC-Manager-App/Dockerfile --tag ${{ env.GAR_LOCATION }}/${{ env.BUILD_TAG }}:1.0.0
+        run: docker build . --file ${{ github.workspace }}/DC-Manager-App/Dockerfile --tag ${{ env.GAR_LOCATION }}/${{ env.BUILD_TAG }}:${{ env.BUILD_VERSION }}
         working-directory: ${{ github.workspace }}/DC-Manager-App
         
       - name: Push image
-        run: docker push ${{ env.GAR_LOCATION }}/${{ env.BUILD_TAG }}:1.0.0
+        run: docker push ${{ env.GAR_LOCATION }}/${{ env.BUILD_TAG }}:${{ env.BUILD_VERSION }}
