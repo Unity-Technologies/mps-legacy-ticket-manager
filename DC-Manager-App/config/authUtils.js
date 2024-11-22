@@ -1,5 +1,7 @@
 const { GoogleAuth } = require("google-auth-library");
 const axios = require("axios");
+// const path = require("path");
+// require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 // Decode the base64 string
 const serviceAccountJson = Buffer.from(process.env.SERVICE_ACCOUNT_JSON_ENCODED, "base64").toString("utf-8");
@@ -46,9 +48,9 @@ async function invokeCloudRunService(endpointPath = "", method = "GET", data = n
         return response;
     } catch (error) {
         throw new Error(
-            `Request failed with status ${error.response?.status}: ${error.message}`
+            `Request failed with status ${error.response.data}`
         );
     }
 }
 
-module.exports = { invokeCloudRunService };
+module.exports = { invokeCloudRunService, getIdentityToken };
