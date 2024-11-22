@@ -10,8 +10,11 @@ const checkZendeskAuth = async (req, res, next) => {
 
     let error_msg = "";
     if (!token) {
-        error_msg = "Missing token. Access denied.";
-        return res.render("index", { qs, error_msg });
+        // error_msg = "Missing token. Access denied.";
+        // return res.render("index", { qs, error_msg });
+        const error = new Error("Unauthorized: Invalid token, token is missing");
+        error.status = 401; // Set the status code for the error
+        return next(error);
     }
 
     const key = config.zendesk.appPublicKey;
@@ -38,8 +41,11 @@ const checkZendeskAuth = async (req, res, next) => {
         next();
     } catch (err) {
         console.error("Invalid token:", err);
-        error_msg = "Unauthorized: Invalid Zendesk token.";
-        return res.render("index", { qs, error_msg });
+        // error_msg = "Unauthorized: Invalid Zendesk token.";
+        // return res.render("index", { qs, error_msg });
+        const error = new Error("Unauthorized: Invalid token, could not verify token");
+        error.status = 401; // Set the status code for the error
+        return next(error);
     }
 };
 
