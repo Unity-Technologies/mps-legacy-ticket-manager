@@ -10,7 +10,7 @@
   "location": {
     "support": {
       "ticket_sidebar": {
-        "url": "https://dc-ticket-tool-877653085348.europe-west2.run.app/zendesk",
+        "url": "https://dc-ticket-tool-877653085348.europe-west2.run.app/",
         "flexible": true
       }
     }
