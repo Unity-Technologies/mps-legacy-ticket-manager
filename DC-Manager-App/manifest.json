@@ -6,10 +6,11 @@
   },
   "defaultLocale": "en",
   "private": true,
+  "signedUrls": true,
   "location": {
     "support": {
       "ticket_sidebar": {
-        "url": "http://localhost:3000/sidebar",
+        "url": "https://dc-ticket-tool-877653085348.europe-west2.run.app/zendesk",
         "flexible": true
       }
     }
