@@ -21,7 +21,7 @@ const checkZendeskAuth = async (req, res, next) => {
         return next(error);
     }
 
-    const key = config.zendesk.appPublicKey;
+    const key = config.zendesk.appPublicKey.replace(/\\n/g, '\n');
     const audience = config.zendesk.appAud;
 
     try {
@@ -49,7 +49,7 @@ const checkZendeskAuth = async (req, res, next) => {
         console.error("Invalid token:", err);
         // error_msg = "Unauthorized: Invalid Zendesk token.";
         // return res.render("index", { qs, error_msg });
-        const error = new Error(`Unauthorized: Invalid token, could not verify token, ${err}\nZendesk app public key: ${config.zendesk.appPublicKey}`);
+        const error = new Error(`Unauthorized: Invalid token, could not verify token, ${err}\nZendesk app public key: ${key}`);
         error.status = 401; // Set the status code for the error
         return next(error);
     }
