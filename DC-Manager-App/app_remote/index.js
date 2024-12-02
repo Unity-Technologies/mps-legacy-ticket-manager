@@ -4,7 +4,7 @@ const ticketRoutes = require("./routes/ticketRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const errorHandler = require("./middleware/errorHandler");
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+// require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const app = express();
 
