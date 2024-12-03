@@ -149,6 +149,7 @@ const updateDcTicketFields = async (zendeskTicketId, url, authEmail) => {
     authEmail
   );
   if (!dcTicketField1) {
+    console.log("DC TICKET FIELD 1");
     await zendeskService.updateCustomField(
       zendeskTicketId,
       12315780559636,
@@ -164,6 +165,7 @@ const updateDcTicketFields = async (zendeskTicketId, url, authEmail) => {
     authEmail
   );
   if (!dcTicketField2) {
+    console.log("DC TICKET FIELD 2");
     await zendeskService.updateCustomField(
       zendeskTicketId,
       26482193950356,
@@ -179,6 +181,7 @@ const updateDcTicketFields = async (zendeskTicketId, url, authEmail) => {
     authEmail
   );
   if (!dcTicketField3) {
+    console.log("DC TICKET FIELD 3");
     await zendeskService.updateCustomField(
       zendeskTicketId,
       26482204680084,
@@ -186,6 +189,8 @@ const updateDcTicketFields = async (zendeskTicketId, url, authEmail) => {
       authEmail
     );
   } else {
+
+    console.log("COMMENT should be created");
     await zendeskService.createTicketComment(
       zendeskTicketId,
       url,

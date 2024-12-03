@@ -195,6 +195,8 @@ const createTicketComment = async (ticketId, comment, isPublic, authEmail) => {
       },
     };
 
+    console.log("START OF CREATE COMMENT");
+
     return await makeZendeskRequest(
       `tickets/${ticketId}`,
       "PUT",
