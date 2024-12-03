@@ -149,7 +149,7 @@ const updateDcTicketFields = async (zendeskTicketId, url, authEmail) => {
     authEmail
   );
   if (!dcTicketField1) {
-    console.log("DC TICKET FIELD 1");
+    console.log("DC TICKET FIELD 1:", dcTicketField1);
     await zendeskService.updateCustomField(
       zendeskTicketId,
       12315780559636,
