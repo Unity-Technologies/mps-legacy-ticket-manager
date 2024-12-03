@@ -44,8 +44,6 @@ const createTicket = async (ticketData) => {
     attachments = [],
   } = ticketData;
 
-  console.log("Attachments length:", attachments.length);
-
   if (attachments.length > 2) {
     throw new Error("Maximum 2 attachments allowed per ticket.");
   }
@@ -72,8 +70,6 @@ const createTicket = async (ticketData) => {
       };
     }),
   };
-
-  console.log("Attachment details in requestBody:", requestBody.attachments);
 
   try {
     const response = await axios.post(

@@ -195,8 +195,6 @@ const createTicketComment = async (ticketId, comment, isPublic, authEmail) => {
       },
     };
 
-    console.log("START OF CREATE COMMENT");
-
     return await makeZendeskRequest(
       `tickets/${ticketId}`,
       "PUT",
@@ -233,7 +231,6 @@ const createDcTicketComment = async (
       attachments.forEach((attachment) => {
         uploadAttachment(attachment, authEmail).then((response) => {
           payload.ticket.comment.uploads = [response];
-          console.log(payload.ticket.comment.uploads);
           setTimeout(async () => {
             return await makeZendeskRequest(
               `tickets/${ticketId}`,
@@ -295,7 +292,6 @@ const getGroups = async (authEmail) => {
       null,
       authEmail
     );
-    console.log(currentGroups);
     return currentGroups;
   } catch (error) {
     // Handle any errors

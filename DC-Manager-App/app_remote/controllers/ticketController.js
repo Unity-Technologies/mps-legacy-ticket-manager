@@ -12,9 +12,6 @@ exports.submitTicket = async (req, res) => {
   const qs = new URLSearchParams(req.query).toString();
   res.cookie("my_app_params", qs, { httpOnly: true });
 
-  console.log(req.body);
-  console.log(req.files);
-
   let error_msg = "";
   let success_msg = "";
 
@@ -26,10 +23,7 @@ exports.submitTicket = async (req, res) => {
       ticketData.attachments = req.files;
     } else {
       ticketData.attachments = [];
-    }
-
-    console.log("Attachments:", ticketData.attachments);
-    
+    }    
 
     if (ticketData.submitViaAPI) {
       await dataCenterServices[dataCenter]
@@ -95,7 +89,7 @@ exports.submitTicket = async (req, res) => {
         });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     error_msg = `API & Email Submission Failure: ${error}`;
     res.render("create-support-ticket", { qs, error_msg });
   }
@@ -149,7 +143,6 @@ const updateDcTicketFields = async (zendeskTicketId, url, authEmail) => {
     authEmail
   );
   if (!dcTicketField1) {
-    console.log("DC TICKET FIELD 1:", dcTicketField1);
     await zendeskService.updateCustomField(
       zendeskTicketId,
       12315780559636,
@@ -165,7 +158,6 @@ const updateDcTicketFields = async (zendeskTicketId, url, authEmail) => {
     authEmail
   );
   if (!dcTicketField2) {
-    console.log("DC TICKET FIELD 2");
     await zendeskService.updateCustomField(
       zendeskTicketId,
       26482193950356,
@@ -181,7 +173,6 @@ const updateDcTicketFields = async (zendeskTicketId, url, authEmail) => {
     authEmail
   );
   if (!dcTicketField3) {
-    console.log("DC TICKET FIELD 3");
     await zendeskService.updateCustomField(
       zendeskTicketId,
       26482204680084,
@@ -190,7 +181,6 @@ const updateDcTicketFields = async (zendeskTicketId, url, authEmail) => {
     );
   } else {
 
-    console.log("COMMENT should be created");
     await zendeskService.createTicketComment(
       zendeskTicketId,
       url,

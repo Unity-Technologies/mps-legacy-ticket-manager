@@ -32,8 +32,6 @@ const createTicket = async (ticketData) => {
     attachments = [],
   } = ticketData;
 
-  console.log("Attachments length:", attachments.length);
-
   if (attachments.length > 5) {
     throw new Error("Maximum limit of 5 files reached.");
   }
@@ -60,8 +58,6 @@ const createTicket = async (ticketData) => {
         }
       }),
     };
-
-    console.log("Attachment details in requestBody:", requestBody.files);
 
     const response = await axios.post(`${config.velia.apiUrl}/ticket`, requestBody, {
       headers: {

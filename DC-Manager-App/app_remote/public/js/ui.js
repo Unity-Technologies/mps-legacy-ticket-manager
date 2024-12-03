@@ -20,7 +20,6 @@ export function initClient() {
 }
 
 export function handleDataCenterChange(client) {
-  console.log("handling data center change...");
   const issueCategorySelect = document.querySelector("#issue-category");
   const dataCenterSelect = document.querySelector("#data-center");
   const ipAddressTextarea = document.querySelector("#ip-address");

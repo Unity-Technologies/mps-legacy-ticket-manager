@@ -38,8 +38,6 @@ const createTicket = async (ticketData) => {
       base64_file,
     };
 
-    console.log("Psychz Data center request:", requestBody);
-
     const response = await axios.post(
       `${config.psychz.apiUrl}/ticket_create`,
       requestBody,

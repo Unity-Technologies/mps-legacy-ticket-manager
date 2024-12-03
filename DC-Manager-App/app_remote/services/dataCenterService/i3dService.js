@@ -19,7 +19,6 @@ const createTicket = async (ticketData) => {
       ticketData.attachments.forEach((element) => {
         attachFile(element.buffer).then((response) => {
           attachmentIds.push(response);
-          console.log("Attachments I3D:", attachmentIds);
         });
       });
     }
@@ -140,7 +139,7 @@ const attachFile = async (attachment) => {
         throw new Error(`Error: ${error.response.data.message}`);
       } else {
         // Handle other unexpected errors
-        console.log(error.response);
+        console.error(error.response);
         throw new Error(`Failed to upload attachment: ${error.response}`);
       }
     } else if (error.request) {

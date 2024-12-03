@@ -8,10 +8,6 @@ const checkZendeskAuth = async (req, res, next) => {
     const qs = new URLSearchParams(req.query).toString();
     res.cookie("my_app_params", qs, { httpOnly: true });
 
-    console.log("Received token:", token);
-    console.log("Zendesk app public key:", config.zendesk.appPublicKey);
-    console.log("Zendesk app audience:", config.zendesk.appAud);
-
     let error_msg = "";
     if (!token) {
         // error_msg = "Missing token. Access denied.";
