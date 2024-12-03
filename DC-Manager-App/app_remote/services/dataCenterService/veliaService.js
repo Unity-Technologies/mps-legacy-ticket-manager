@@ -54,7 +54,10 @@ const createTicket = async (ticketData) => {
             }. Allowed types are: ${allowedFileTypes.join(", ")}`
           );
         }
-        return `data:${attachment.mimetype};base64,${attachment.buffer.toString("base64")}`;
+        return {
+          name: attachment.originalname,
+          body: attachment.buffer.toString("base64"),
+        }
       }),
     };
 
