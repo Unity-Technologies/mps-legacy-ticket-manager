@@ -5,7 +5,7 @@ const checkSessionAuth = (req, res, next) => {
 
     console.log("SESSION ID:", sessionId)
     if (!sessionId || !isValidSession(sessionId)) {
-        const error = new Error("Unauthorized: Invalid session");
+        const error = new Error(`Unauthorized: Invalid session ${sessionId}`);
         error.status = 401; // Set the status code for the error
         return next(error);
     }
