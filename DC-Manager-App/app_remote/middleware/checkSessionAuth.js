@@ -3,6 +3,7 @@ const { sessionStore, HOUR_IN_MILLISECONDS, WORKWEEK_IN_MILLISECONDS } = require
 const checkSessionAuth = (req, res, next) => {
     const sessionId = req.cookies.session_id;
 
+    console.log("SESSION ID:", sessionId)
     if (!sessionId || !isValidSession(sessionId)) {
         const error = new Error("Unauthorized: Invalid session");
         error.status = 401; // Set the status code for the error
@@ -16,13 +17,16 @@ const checkSessionAuth = (req, res, next) => {
 // Function to validate session data in-memory
 const isValidSession = (sessionId) => {
     const session = sessionStore[sessionId];
+    console.log("CHECKING SESSION", session)
     if (!session) return false;
 
     // Check if the session has expired
     if (Date.now() > session.expiry) {
+        console.log("DELETING SESSION")
         delete sessionStore[sessionId]; // Remove expired session
         return false;
     }
+    console.log("SESSION IS VALID", session)
     return true;
 };
 
