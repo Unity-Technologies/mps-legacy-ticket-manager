@@ -51,7 +51,7 @@ export function validateForm() {
   } else if (!/^\d+$/.test(zendeskTicketIdValue)) {
     setErrorFor(zendeskTicketId, "Zendesk Ticket ID must be a number");
     isValid = false;
-  } else if (zendeskTicketIdValue.length < 5) { // change back to 7
+  } else if (zendeskTicketIdValue.length < 7) { // change back to 7
     setErrorFor(
       zendeskTicketId,
       "Zendesk Ticket ID must be 7 characters or more"
