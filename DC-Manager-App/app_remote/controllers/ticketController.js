@@ -45,7 +45,7 @@ exports.submitTicket = async (req, res) => {
             [
               "dc_ticket_raised",
               `${dataCenter}_dc_ticket`,
-              `${ticketData.issueCategory}`,
+              `${String(ticketData.issueCategory).replace(" ", "_")}`,
             ],
             ticketData.zendeskUserEmail
           );
