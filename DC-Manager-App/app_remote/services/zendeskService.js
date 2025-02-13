@@ -282,6 +282,24 @@ const updateTicket = async (ticketId, requesterName, requesterEmail, authEmail) 
   }
 };
 
+const addTags = async (ticketId, tags, authEmail) => {
+  try {
+    const payload = {
+      tags: tags,
+    };
+
+    return await makeZendeskRequest(
+      `tickets/${ticketId}/tags`,
+      "PUT",
+      payload,
+      authEmail
+    );
+  } catch (error) {
+    throw new Error(
+      `Error adding tags to Zendesk ticket ${ticketId}: ${error.message}`
+    );
+  }
+};
 
 const getGroups = async (authEmail) => {
   try {
@@ -321,5 +339,6 @@ module.exports = {
   createDcTicketComment,
   updateTicket,
   getGroups,
+  addTags,
   verifyAuth,
 };

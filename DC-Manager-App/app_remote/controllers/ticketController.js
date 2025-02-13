@@ -23,7 +23,7 @@ exports.submitTicket = async (req, res) => {
       ticketData.attachments = req.files;
     } else {
       ticketData.attachments = [];
-    }    
+    }
 
     if (ticketData.submitViaAPI) {
       await dataCenterServices[dataCenter]
@@ -38,6 +38,15 @@ exports.submitTicket = async (req, res) => {
             ticketData.zendeskTicketId,
             response,
             true,
+            ticketData.zendeskUserEmail
+          );
+          await zendeskService.addTags(
+            ticketData.zendeskTicketId,
+            [
+              "dc_ticket_raised",
+              `${dataCenter}_dc_ticket`,
+              `${ticketData.issueCategory}`,
+            ],
             ticketData.zendeskUserEmail
           );
           res.render("create-support-ticket", { qs, success_msg });
@@ -70,7 +79,12 @@ exports.submitTicket = async (req, res) => {
             ticketData.zendeskUserEmail
           );
           setTimeout(async () => {
-            await zendeskService.updateTicket(response, ticketData.dataCenterName, emailConfig[dataCenter].email, ticketData.zendeskUserEmail);
+            await zendeskService.updateTicket(
+              response,
+              ticketData.dataCenterName,
+              emailConfig[dataCenter].email,
+              ticketData.zendeskUserEmail
+            );
           }, 2000);
           setTimeout(async () => {
             await zendeskService.createDcTicketComment(
@@ -180,7 +194,6 @@ const updateDcTicketFields = async (zendeskTicketId, url, authEmail) => {
       authEmail
     );
   } else {
-
     await zendeskService.createTicketComment(
       zendeskTicketId,
       url,
