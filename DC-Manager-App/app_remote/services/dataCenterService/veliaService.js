@@ -29,6 +29,9 @@ const createTicket = async (ticketData) => {
     topic = "velianet-support",
     summary,
     message,
+    server = [
+      29298
+    ],
     attachments = [],
   } = ticketData;
 
@@ -44,6 +47,7 @@ const createTicket = async (ticketData) => {
       topic,
       summary,
       message,
+      server,
       files: attachments.map((attachment) => {
         if (!isValidFileType(attachment)) {
           throw new Error(
