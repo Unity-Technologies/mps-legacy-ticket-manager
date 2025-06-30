@@ -39,6 +39,8 @@ const createTicket = async (ticketData) => {
     throw new Error("Maximum limit of 5 files reached.");
   }
 
+  let td;
+
   try {
     const requestBody = {
       // Map data to the format required by the 100TB API
@@ -63,6 +65,9 @@ const createTicket = async (ticketData) => {
       }),
     };
 
+    td = requestBody;
+    console.log("VELIA TICKET DATA:", requestBody);
+
     const response = await axios.post(`${config.velia.apiUrl}/ticket`, requestBody, {
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +86,7 @@ const createTicket = async (ticketData) => {
       // that falls outside the validated range
       console.error(
         `${error.response.status} Error creating Velia ticket:`,
-        error.response.data
+        td.server, error.response.data
       );
 
       if (error.response.status === 409) {
